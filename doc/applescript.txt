@@ -1,0 +1,7 @@
+# Apple Script
+
+## PS4リモートプレイのウィンドウ位置・サイズを出力
+osascript -e 'tell application "System Events" to get properties of first window of application process "RemotePlay"'
+
+## PS4リモートプレイのウィンドウを前面に出す
+osascript -e 'tell application "RemotePlay" to activate'

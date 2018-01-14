@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_vJu5kO3CEee4WvkakFiolQ" name="RootElement">
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_z7R9AO3CEee4WvkakFiolQ" name="StateMachine">
+    <region xmi:type="uml:Region" xmi:id="_0waOMO3CEee4WvkakFiolQ" name="Region1">
+      <transition xmi:type="uml:Transition" xmi:id="_zM-3IO3DEee4WvkakFiolQ" name="INITIAL_EVENT" source="_vwuLoO3DEee4WvkakFiolQ" target="_ktfuwO3DEee4WvkakFiolQ"/>
+      <transition xmi:type="uml:Transition" xmi:id="_4Qw6EO3DEee4WvkakFiolQ" name="DEAL_CARDS_EVENT" source="_ktfuwO3DEee4WvkakFiolQ" target="_FMhbUO3DEee4WvkakFiolQ"/>
+      <transition xmi:type="uml:Transition" xmi:id="_yMe-gO-nEeeEdqkz1z2CUg" name="ROYAL_STRAIGHT_SLIME_EVENT" source="_ktfuwO3DEee4WvkakFiolQ" target="_rNt1kO-nEeeEdqkz1z2CUg"/>
+      <transition xmi:type="uml:Transition" xmi:id="_y9PGAO-nEeeEdqkz1z2CUg" name="ROYAL_STRAIGHT_SLIME_EVENT" source="_FMhbUO3DEee4WvkakFiolQ" target="_rNt1kO-nEeeEdqkz1z2CUg"/>
+      <transition xmi:type="uml:Transition" xmi:id="_LMGdwO-oEeeEdqkz1z2CUg" name="OTHER_EVENT" source="_FMhbUO3DEee4WvkakFiolQ" target="_ktfuwO3DEee4WvkakFiolQ"/>
+      <transition xmi:type="uml:Transition" xmi:id="_gV7XMO-oEeeEdqkz1z2CUg" name="OTHER_EVENT" source="_ktfuwO3DEee4WvkakFiolQ" target="_ktfuwO3DEee4WvkakFiolQ"/>
+      <transition xmi:type="uml:Transition" xmi:id="_jxRHEPg3Eees1eIkRghACA" name="BEFORE_BET_COIN_EVENT" source="_ktfuwO3DEee4WvkakFiolQ" target="_GEHhsPg3Eees1eIkRghACA"/>
+      <transition xmi:type="uml:Transition" xmi:id="_n3yQgPg3Eees1eIkRghACA" name="BEFORE_BET_COIN_EVENT" source="_FMhbUO3DEee4WvkakFiolQ" target="_GEHhsPg3Eees1eIkRghACA"/>
+      <transition xmi:type="uml:Transition" xmi:id="_pOjPIPg3Eees1eIkRghACA" name="[End]" source="_GEHhsPg3Eees1eIkRghACA" target="_rNt1kO-nEeeEdqkz1z2CUg"/>
+      <transition xmi:type="uml:Transition" xmi:id="_3mNRMPg3Eees1eIkRghACA" name="DealCards" guard="_Zw9qUPg4Eees1eIkRghACA" kind="internal" source="_FMhbUO3DEee4WvkakFiolQ" target="_FMhbUO3DEee4WvkakFiolQ">
+        <ownedRule xmi:type="uml:TimeConstraint" xmi:id="_Zw9qUPg4Eees1eIkRghACA" name="この状態が60秒以上続いている"/>
+        <effect xmi:type="uml:Activity" xmi:id="_pDhOYPg4Eees1eIkRghACA" name="&quot;くばる&quot;ボタンを再度押す"/>
+      </transition>
+      <transition xmi:type="uml:Transition" xmi:id="_UNwrAPg5Eees1eIkRghACA" name="[Retry]" source="_GEHhsPg3Eees1eIkRghACA" target="_ktfuwO3DEee4WvkakFiolQ"/>
+      <subvertex xmi:type="uml:State" xmi:id="_FMhbUO3DEee4WvkakFiolQ" name="DEALT_CARDS_STATE">
+        <entry xmi:type="uml:Activity" xmi:id="_i5cAUO-pEeeEdqkz1z2CUg" name="残すカードを決定して&quot;くばる&quot;ボタン押下"/>
+      </subvertex>
+      <subvertex xmi:type="uml:State" xmi:id="_ktfuwO3DEee4WvkakFiolQ" name="OTHER_STATE">
+        <entry xmi:type="uml:Activity" xmi:id="_Y6JFoO-pEeeEdqkz1z2CUg" name="Enterを押す"/>
+      </subvertex>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_vwuLoO3DEee4WvkakFiolQ" name="INITIAL_STATE"/>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_rNt1kO-nEeeEdqkz1z2CUg" name="FINAL_STATE"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_GEHhsPg3Eees1eIkRghACA" name="RETRY_OR_END_STATE" kind="choice"/>
+    </region>
+  </packagedElement>
+  <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_6wuQcO-nEeeEdqkz1z2CUg">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_6wzwAO-nEeeEdqkz1z2CUg" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <references xmi:type="ecore:EPackage" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_Kv8EIKFXEeS_KNX0nfvIVQ"/>
+    </eAnnotations>
+    <appliedProfile xmi:type="uml:Profile" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#ActionLanguage"/>
+  </profileApplication>
+</uml:Model>
