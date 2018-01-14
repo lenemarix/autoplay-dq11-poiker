@@ -362,7 +362,7 @@ PS4リモートプレイのウィンドウ内のゲーム画面の幅と高さ�
 緩和策として短い時間で連続して画面キャプチャを行い、それぞれのキャプチャに対して
 カードの認識を行い、結果を比較することでカード認識のミスを検出する。
 
-### autoplay.dq11.poker.event.capture-burst-interval=100
+### autoplay.dq11.poker.event.capture-burst-interval=200
 イベントディスパッチャが画面キャプチャを連続で取る際のインターバル(ms)。
 
 ### autoplay.dq11.poker.event.debug-rss-event-count=0
