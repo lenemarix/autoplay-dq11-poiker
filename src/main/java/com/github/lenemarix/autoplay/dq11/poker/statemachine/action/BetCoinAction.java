@@ -13,7 +13,7 @@ import com.github.lenemarix.autoplay.dq11.poker.util.RobotUtil;
 /**
  * かけ金の選択をおこなうアクション。
  */
-@ConfigurationProperties(prefix = "autoplay.dq11.poker.bet-coin")
+@ConfigurationProperties(prefix = "autoplay.dq11.poker.bet-coin-action")
 public class BetCoinAction extends AbstractAutoplayAction {
 
     /** かけ金の設定のために上キーを押す回数(最大10回)。 */

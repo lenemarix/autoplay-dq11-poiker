@@ -3,8 +3,6 @@ package com.github.lenemarix.autoplay.dq11.poker.statemachine.action;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.statemachine.StateContext;
 
@@ -19,8 +17,6 @@ import com.github.lenemarix.autoplay.dq11.poker.util.RobotUtil;
  * カードの交換を行うアクション。 交換するカードと残すカードを決定し、適切にキー操作を行ったあとに"くばる"ボタンを押下する。
  */
 public class DecideExchangeCardAction extends AbstractAutoplayAction {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(DecideExchangeCardAction.class);
 
     @Autowired
     RobotUtil robotUtil;
