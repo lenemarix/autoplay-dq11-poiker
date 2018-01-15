@@ -42,7 +42,8 @@ public class CaptureHistory {
 
     private LinkedList<CaptureHistoryElement> captureList = new LinkedList<>();
 
-    public void add(BufferedImage image, String eventId, Events dispatchedEvent, LocalDateTime captureDateTime) {
+    public synchronized void add(BufferedImage image, String eventId, Events dispatchedEvent,
+            LocalDateTime captureDateTime) {
         if (max <= 0) {
             // maxが0以下ならキャプチャを保存しない
             return;
@@ -58,7 +59,7 @@ public class CaptureHistory {
      * 直近のスクリーンキャプチャをファイル保存する。
      */
     @PreDestroy
-    public void dump() {
+    public synchronized void dump() {
         if (autoOldFileDelete) {
             try {
                 deleteOldFile();
@@ -74,33 +75,28 @@ public class CaptureHistory {
             } catch (IOException e1) {
                 LOGGER.error("fail to save capture file: {}", filePath, e1);
             }
-            LOGGER.info("save capture file. date: {}, eventId: {}, event: {}, file: {}",
-                    e.getCaptureDateTime(), e.getEventId(), e.getDispatchedEvent(), filePath);
+            LOGGER.info("save capture file. date: {}, eventId: {}, event: {}, file: {}", e.getCaptureDateTime(),
+                    e.getEventId(), e.getDispatchedEvent(), filePath);
         });
     }
 
     /**
-     * すでに存在するキャプチャ履歴ファイルを削除する。
-     * 削除するのは数字が14桁 + ".png" のファイル。
+     * すでに存在するキャプチャ履歴ファイルを削除する。 削除するのは数字が14桁 + ".png" のファイル。
      * 
-     * @throws IOException ファイルの削除に失敗した場合。
+     * @throws IOException
+     *             ファイルの削除に失敗した場合。
      */
     private void deleteOldFile() throws IOException {
-        Files.list(Paths.get(saveDirectory))
-            .map(p -> p.toFile())
-            .filter(f -> f.isFile())
-            .filter(f -> f.getName().matches("[0-9]{14}\\.png"))
-            .forEach(f -> {
-                LOGGER.debug("delete old capture file: {}",f.getAbsolutePath());
-                f.delete();
-            });
+        Files.list(Paths.get(saveDirectory)).map(p -> p.toFile()).filter(f -> f.isFile())
+                .filter(f -> f.getName().matches("[0-9]{14}\\.png")).forEach(f -> {
+                    LOGGER.debug("delete old capture file: {}", f.getAbsolutePath());
+                    f.delete();
+                });
     }
 
     private String createCaptureFilePath(CaptureHistoryElement e) {
         String filePath = saveDirectory + File.separator
-                + e.getCaptureDateTime().format(
-                        DateTimeFormatter.ofPattern(
-                                "yyyyMMddHHmmss")) + ".png";
+                + e.getCaptureDateTime().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".png";
         return filePath;
     }
 
