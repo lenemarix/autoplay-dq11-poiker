@@ -32,8 +32,6 @@ import com.github.lenemarix.autoplay.dq11.poker.statemachine.action.PushDealButt
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.guard.RetryOnUnexpectedStateGuard;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.guard.RetryPushDealButtonGuard;
-import com.github.lenemarix.autoplay.dq11.poker.statemachine.listener.DealtCardsStateStartDateSaveListener;
-import com.github.lenemarix.autoplay.dq11.poker.statemachine.listener.LoggingStatemachineListener;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States;
 
 /**
@@ -92,22 +90,10 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
         return new RetryOnUnexpectedStateGuard();
     }
 
-    @Bean
-    public DealtCardsStateStartDateSaveListener dealtCardsStateStartDateSaveListener() {
-        return new DealtCardsStateStartDateSaveListener();
-    }
-
-    @Bean
-    public LoggingStatemachineListener loggingStatemachineListener() {
-        return new LoggingStatemachineListener();
-    }
-
     @Override
     public void configure(StateMachineConfigurationConfigurer<States, Events> config) throws Exception {
         config.withConfiguration()
                 .autoStartup(false)
-                .listener(dealtCardsStateStartDateSaveListener())
-                .listener(loggingStatemachineListener())
                 .taskScheduler(taskScheduler());
     }
 

@@ -3,9 +3,9 @@ package com.github.lenemarix.autoplay.dq11.poker.statemachine.listener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.statemachine.StateContext;
-import org.springframework.statemachine.StateContext.Stage;
 import org.springframework.statemachine.StateMachine;
-import org.springframework.statemachine.listener.StateMachineListenerAdapter;
+import org.springframework.statemachine.annotation.OnTransition;
+import org.springframework.statemachine.annotation.WithStateMachine;
 
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States;
@@ -13,18 +13,13 @@ import com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States;
 /**
  * {@link StateMachine}の状態遷移に関連するログを出力するリスナ。
  */
-public class LoggingStatemachineListener extends StateMachineListenerAdapter<States, Events> {
+@WithStateMachine
+public class LoggingStatemachineListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingStatemachineListener.class);
 
-    // StateContextにアクセスするにはstateContext()メソッドをオーバーライドする必要がある。
-    @Override
-    public void stateContext(StateContext<States, Events> stateContext) {
-        // 遷移が発生した時のみログ出力する。
-        if (!Stage.TRANSITION.equals(stateContext.getStage())) {
-            return;
-        }
-
+    @OnTransition
+    public void onTransition(StateContext<States, Events> stateContext) {
         String eventId = stateContext.getMessageHeaders().get("eventId", String.class);
         if (eventId == null) {
             eventId = "-";
