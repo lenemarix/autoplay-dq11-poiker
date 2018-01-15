@@ -83,8 +83,8 @@ public class ImageComparator {
             }
         }
 
-        LOGGER.debug("correctCount = " + correctCount + " / warnningCount = " + warnningCount
-                + " / irregularCount = " + irregularCount + " / rgbSum = " + rgbSum);
+        LOGGER.debug("correctCount = {} / warnningCount = {} / irregularCount = {} / rgbSum = {}", 
+                correctCount, warnningCount, irregularCount, rgbSum);
 
         return irregularCount == 0;
 

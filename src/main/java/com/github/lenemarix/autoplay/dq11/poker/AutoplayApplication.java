@@ -53,7 +53,7 @@ public class AutoplayApplication implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        LOGGER.info("mode: " + mode);
+        LOGGER.info("mode: {}", mode);
 
         switch (mode) {
         case AUTOPLAY:

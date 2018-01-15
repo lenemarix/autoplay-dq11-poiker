@@ -50,7 +50,7 @@ public class CaptureCardRunner {
             BufferedImage gameScreen = robotUtil.captureGameScreen();
             imageUtil.imageToFile(gameScreen, dealtCardsCapture.getRectangle(cardNumber),
                     dealtCardsCapture.getFilepath(cardType));
-            LOGGER.info("card capture is done. cardNumber: " + cardNumber + ", card: " + cardType);
+            LOGGER.info("card capture is done. cardNumber: {}, card: {}", cardNumber, cardType);
         } catch (IOException e) {
             LOGGER.error("fail to capture card", e);
         }

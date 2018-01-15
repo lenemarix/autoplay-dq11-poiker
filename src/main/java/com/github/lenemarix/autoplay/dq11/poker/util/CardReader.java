@@ -100,7 +100,7 @@ public class CardReader {
             result = imageComparator.compare(cardFile, capturedCardImage);
         } catch (IOException e) {
             // ファイルが読み込めなかった場合はログ出力して継続する
-            LOGGER.error("fail to read card file: " + cardFile);
+            LOGGER.error("fail to read card file: {}", cardFile);
         }
         return result;
     }

@@ -80,7 +80,7 @@ public class EventDispatcherTask {
      */
     @Scheduled(fixedDelayString = "${autoplay.dq11.poker.event.timer-interval}")
     public void dispatchEvent() {
-        LOGGER.debug("dispatchEvent start. timer-interval: " + timerInterval + "ms");
+        LOGGER.debug("dispatchEvent start. timer-interval: {}ms", timerInterval);
 
         // StatemachineがINITIAL_STATEになるまで初期化イベントを投げない
         if (!doneInitialEvent && !stateMachine.getInitialState().equals(stateMachine.getState())) {
@@ -108,7 +108,7 @@ public class EventDispatcherTask {
         // キャプチャ画像には最後のキャプチャを使う。
         BufferedImage screen = captureList.get(captureList.size() - 1);
 
-        LOGGER.info("read cards: " + cards.stream().map(c -> c.name()).collect(Collectors.joining(",")));
+        LOGGER.info("read cards: {}", cards.stream().map(c -> c.name()).collect(Collectors.joining(",")));
 
         Events event = null;
         if (shouldSendInitialEvent()) {
@@ -137,7 +137,7 @@ public class EventDispatcherTask {
         // ゲーム画面のキャプチャ画像を履歴に保持。
         captureHistory.add(screen, eventId, event, captureDateTime);
 
-        LOGGER.debug("dispatchEvent end. dispatched event: " + event);
+        LOGGER.debug("dispatchEvent end. dispatched event: {}", event);
     }
 
     /**
@@ -177,7 +177,7 @@ public class EventDispatcherTask {
             }
         } catch (IOException e) {
             // ファイル読み込みに失敗したらログを出して継続。
-            LOGGER.error("fail to read deal cards button image file: " + dealCardsButtonCapture.getFilepath(), e);
+            LOGGER.error("fail to read deal cards button image file: {}", dealCardsButtonCapture.getFilepath(), e);
         }
         return false;
     }
@@ -224,7 +224,7 @@ public class EventDispatcherTask {
             }
         } catch (IOException e) {
             // ファイル読み込みに失敗したらログを出して継続。
-            LOGGER.error("fail to read bet coin input image file: " + betCoinInputCapture.getFilepath(), e);
+            LOGGER.error("fail to read bet coin input image file: {}", betCoinInputCapture.getFilepath(), e);
         }
         return false;
     }

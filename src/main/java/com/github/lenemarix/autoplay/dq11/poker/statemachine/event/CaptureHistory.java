@@ -73,7 +73,7 @@ public class CaptureHistory {
             try {
                 imageUtil.imageToFile(e.getImage(), filePath);
             } catch (IOException e1) {
-                LOGGER.error("fail to save capture file: " + filePath, e1);
+                LOGGER.error("fail to save capture file: {}", filePath, e1);
             }
             LOGGER.info("save capture file. date: {}, eventId: {}, event: {}, file: {}",
                     e.getCaptureDateTime(), e.getEventId(), e.getDispatchedEvent(), filePath);

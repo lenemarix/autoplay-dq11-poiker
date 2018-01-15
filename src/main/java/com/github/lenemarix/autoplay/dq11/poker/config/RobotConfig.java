@@ -23,7 +23,7 @@ public class RobotConfig {
 
     @Bean
     public Robot robot() throws AWTException {
-        LOGGER.info("Robot auto delay: " + autodelay + "ms");
+        LOGGER.info("Robot auto delay: {}ms", autodelay);
 
         System.setProperty("java.awt.headless", "false");
 

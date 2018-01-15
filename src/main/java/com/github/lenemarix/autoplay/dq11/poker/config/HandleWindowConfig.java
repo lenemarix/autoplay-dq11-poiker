@@ -38,7 +38,7 @@ public class HandleWindowConfig {
 
         ActivateWindowUtil util;
 
-        LOGGER.info("activate window mode: " + activateWindowMode);
+        LOGGER.info("activate window mode: {}", activateWindowMode);
         switch (activateWindowMode) {
         case MOUSE_CLICK:
             util = new MouseClickActivateWindowUtil();
@@ -49,10 +49,10 @@ public class HandleWindowConfig {
         case AUTO:
             String osname = System.getProperty("os.name").toLowerCase();
             if (osname.startsWith("mac")) {
-                LOGGER.info("activate window mode (auto): " + ActivateWindowMode.APPLE_SCRIPT);
+                LOGGER.info("activate window mode (auto): {}", ActivateWindowMode.APPLE_SCRIPT);
                 util = new AppleScriptActivateWindowUtil();
             } else {
-                LOGGER.info("activate window mode (auto): " + ActivateWindowMode.MOUSE_CLICK);
+                LOGGER.info("activate window mode (auto): {}", ActivateWindowMode.MOUSE_CLICK);
                 util = new MouseClickActivateWindowUtil();
             }
             break;
