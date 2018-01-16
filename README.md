@@ -56,6 +56,8 @@ PS4リモートプレイをPC上で実行することで、PS4のゲームをキ
 ### 状態遷移
 本ツールはSpring Statemachineを使って内部で状態遷移を管理しています。
 
+![状態遷移図](https://raw.githubusercontent.com/lenemarix/autoplay-dq11-poker/master/doc/autoplay-statemachine.png)
+
 状態遷移で使用する状態は以下のとおりです。Statesのenumで定義されています。
 
 |状態                       |説明                                           |
