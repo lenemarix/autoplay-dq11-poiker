@@ -1,5 +1,6 @@
 package com.github.lenemarix.autoplay.dq11.poker.statemachine;
 
+import static com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events.BEFORE_BET_COIN_EVENT;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events.OTHER_EVENT;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events.ROYAL_STRAIGHT_SLIME_EVENT;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.DEALT_CARDS_STATE;
@@ -77,10 +78,59 @@ public class AutoplayStatemachineTest {
                 .expectStates(PLAYING_POKER_STATE, OTHER_STATE)
                 .and()
             .step()
+                .sendEvent(OTHER_EVENT)
+                .expectStateChanged(1)
+                .expectStates(PLAYING_POKER_STATE, OTHER_STATE)
+                .and()
+            .step()
                 .sendEvent(ROYAL_STRAIGHT_SLIME_EVENT)
                 .expectStateChanged(1)
                 .expectState(FINAL_STATE)
                 .expectStateMachineStopped(2)
+                .and()
+            .build()
+            .test();
+    }
+
+    @Test
+    public void testStateMachine02() throws Exception {
+        List<Card> cards = Arrays.asList(Card.S10, Card.SJ, Card.SQ, Card.XX, Card.XX);
+        Message<Events> dealCardsEventMessage = MessageBuilder
+                .withPayload(Events.DEAL_CARDS_EVENT)
+                .setHeader("cards", cards)
+                .build();
+
+        StateMachineTestPlanBuilder.<States, Events>builder()
+            .stateMachine(stateMachine)
+            .step()
+                .expectStates(PLAYING_POKER_STATE, OTHER_STATE)
+                .and()
+            .step()
+                .sendEvent(dealCardsEventMessage)
+                .expectStateChanged(1)
+                .expectStates(PLAYING_POKER_STATE, DEALT_CARDS_STATE)
+                .and()
+            .step()
+                .sendEvent(ROYAL_STRAIGHT_SLIME_EVENT)
+                .expectStateChanged(1)
+                .expectState(FINAL_STATE)
+                .expectStateMachineStopped(2)
+                .and()
+            .build()
+            .test();
+    }
+
+    @Test
+    public void testStateMachine03() throws Exception {
+        StateMachineTestPlanBuilder.<States, Events>builder()
+            .stateMachine(stateMachine)
+            .step()
+                .expectStates(PLAYING_POKER_STATE, OTHER_STATE)
+                .and()
+            .step()
+                .sendEvent(BEFORE_BET_COIN_EVENT)
+                .expectStateChanged(2)
+                .expectStates(PLAYING_POKER_STATE, OTHER_STATE)
                 .and()
             .build()
             .test();
