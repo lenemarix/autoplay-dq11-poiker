@@ -7,6 +7,7 @@ import static com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.DEALT_CARDS_STATE;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.FINAL_STATE;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.OTHER_STATE;
+import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.PLAYING_POKER_STATE;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.RETRY_OR_END_STATE;
 
 import org.slf4j.Logger;
@@ -90,16 +91,33 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
     public void configure(StateMachineStateConfigurer<States, Events> states) throws Exception {
         // 各状態とEntry Actionの定義。
         states.withStates()
-                .initial(OTHER_STATE, activateWindowAction())
-                .state(OTHER_STATE, enterKeyPushAction(), null)
-                .state(DEALT_CARDS_STATE, decideExchangeCardAction(), null)
+                .initial(PLAYING_POKER_STATE, activateWindowAction())
                 .choice(RETRY_OR_END_STATE)
-                .end(FINAL_STATE);
+                .end(FINAL_STATE)
+                .and()
+                .withStates()
+                    .parent(States.PLAYING_POKER_STATE)
+                    .initial(OTHER_STATE)
+                    .state(OTHER_STATE, enterKeyPushAction(), null)
+                    .state(DEALT_CARDS_STATE, decideExchangeCardAction(), null);
     }
 
     @Override
     public void configure(StateMachineTransitionConfigurer<States, Events> transitions) throws Exception {
         transitions
+                // ポーカープレイ中状態でロイヤルストレートスライムを検出。終了状態へ遷移。
+                .withExternal()
+                    .source(PLAYING_POKER_STATE)
+                    .target(FINAL_STATE)
+                    .event(ROYAL_STRAIGHT_SLIME_EVENT)
+                    .action(pushPsButtonAction())
+                    .and()
+                // かけ金入力欄が0の状態で見つかった場合、何らかの原因でポーカーを終了してしまったとみなし、リトライ・終了選択状態へ遷移。
+                .withExternal()
+                    .source(PLAYING_POKER_STATE)
+                    .target(RETRY_OR_END_STATE)
+                    .event(BEFORE_BET_COIN_EVENT)
+                    .and()
                 // "くばる"ボタンを見つけたら、その他状態からカード配布済み状態へ遷移。
                 .withExternal()
                     .source(OTHER_STATE)
@@ -112,42 +130,16 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
                     .target(OTHER_STATE)
                     .event(OTHER_EVENT)
                     .and()
-                // その他状態でロイヤルストレートスライムを検出。終了状態へ遷移。
-                .withExternal()
-                    .source(OTHER_STATE)
-                    .target(FINAL_STATE)
-                    .event(ROYAL_STRAIGHT_SLIME_EVENT)
-                    .action(pushPsButtonAction())
-                    .and()
                 // カード配布済み状態でロイヤルストレートスライムを検出。終了状態へ遷移。
                 .withExternal()
                     .source(DEALT_CARDS_STATE)
                     .target(OTHER_STATE)
                     .event(OTHER_EVENT)
                     .and()
-                // カード配布済み状態でロイヤルストレートスライムを検出。終了状態へ遷移。
-                .withExternal()
-                    .source(DEALT_CARDS_STATE)
-                    .target(FINAL_STATE)
-                    .event(ROYAL_STRAIGHT_SLIME_EVENT)
-                    .action(pushDealButtonAction())
-                    .and()
-                // かけ金入力欄が0の状態で見つかった場合、何らかの原因でポーカーを終了してしまったとみなし、リトライ・終了選択状態へ遷移。
-                .withExternal()
-                    .source(DEALT_CARDS_STATE)
-                    .target(RETRY_OR_END_STATE)
-                    .event(BEFORE_BET_COIN_EVENT)
-                    .and()
-                // かけ金入力欄が0の状態で見つかった場合、何らかの原因でポーカーを終了してしまったとみなし、リトライ・終了選択状態へ遷移。
-                .withExternal()
-                    .source(OTHER_STATE)
-                    .target(RETRY_OR_END_STATE)
-                    .event(BEFORE_BET_COIN_EVENT)
-                    .and()
                 // 予期せぬ状態になったときにリトライかアプリケーション終了を判定する。
                 .withChoice()
                     .source(RETRY_OR_END_STATE)
-                    .first(OTHER_STATE, retryOnUnexpectedStateGuard(), betCoinAction())
+                    .first(PLAYING_POKER_STATE, retryOnUnexpectedStateGuard(), betCoinAction())
                     .last(FINAL_STATE)
                     .and()
                 // カード配布済み状態が長く続く場合、"くばる"ボタンの押下に失敗したとみなし、再度ボタンの押下を試みる。

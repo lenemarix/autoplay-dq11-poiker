@@ -3,7 +3,9 @@ package com.github.lenemarix.autoplay.dq11.poker.statemachine;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events.OTHER_EVENT;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events.ROYAL_STRAIGHT_SLIME_EVENT;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.DEALT_CARDS_STATE;
+import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.FINAL_STATE;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.OTHER_STATE;
+import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.PLAYING_POKER_STATE;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -62,23 +64,23 @@ public class AutoplayStatemachineTest {
         StateMachineTestPlanBuilder.<States, Events>builder()
             .stateMachine(stateMachine)
             .step()
-                .expectStates(OTHER_STATE)
+                .expectStates(PLAYING_POKER_STATE, OTHER_STATE)
                 .and()
             .step()
                 .sendEvent(dealCardsEventMessage)
                 .expectStateChanged(1)
-                .expectState(DEALT_CARDS_STATE)
+                .expectStates(PLAYING_POKER_STATE, DEALT_CARDS_STATE)
                 .and()
             .step()
                 .sendEvent(OTHER_EVENT)
                 .expectStateChanged(1)
-                .expectState(OTHER_STATE)
+                .expectStates(PLAYING_POKER_STATE, OTHER_STATE)
                 .and()
             .step()
                 .sendEvent(ROYAL_STRAIGHT_SLIME_EVENT)
                 .expectStateChanged(1)
-                .expectState(States.FINAL_STATE)
-                .expectStateMachineStopped(1)
+                .expectState(FINAL_STATE)
+                .expectStateMachineStopped(2)
                 .and()
             .build()
             .test();

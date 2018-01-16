@@ -5,6 +5,9 @@ package com.github.lenemarix.autoplay.dq11.poker.statemachine.state;
  */
 public enum States {
 
+    /** ポーカープレイ中の状態。 */
+    PLAYING_POKER_STATE,
+    
     /** カード配布済み状態("くばる"ボタンが表示されている)。 */
     DEALT_CARDS_STATE,
 
