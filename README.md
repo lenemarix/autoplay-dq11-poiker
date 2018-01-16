@@ -60,7 +60,6 @@ PS4リモートプレイをPC上で実行することで、PS4のゲームをキ
 
 |状態                       |説明                                           |
 |---------------------------|-----------------------------------------------|
-|INITIAL_STATE              |初期状態                                       |
 |DEALT_CARDS_STATE          |カード配布済み状態                             |
 |RETRY_OR_END_STATE         |リトライ・終了選択状態                         |
 |OTHER_STATE                |その他の状態 (Enterキーを押しておけばいい状態) |
@@ -76,7 +75,6 @@ PS4リモートプレイをPC上で実行することで、PS4のゲームをキ
 
 |イベント                   |説明                                                |
 |---------------------------|----------------------------------------------------|
-|INITIAL_EVENT              |初回に一度だけ送信される初期化イベント              |
 |DEAL_CARDS_EVENT           |"くばる"ボタンを検知した際に送信される              |
 |ROYAL_STRAIGHT_SLIME_EVENT |ロイヤルストレートスライムを検出した際に送信される  |
 |BEFORE_BET_COIN_EVENT      |かけ金入力欄を検出した際に送信される                |
@@ -87,12 +85,12 @@ PS4リモートプレイをPC上で実行することで、PS4のゲームをキ
 
 |遷移元状態 |イベント       |遷移先状態   |実行Action                                  |
 |-----------|---------------|-------------|--------------------------------------------|
-|INITIAL    |INITIAL        |OTHER        |PS4リモートプレイのウィンドウを前面に出す   |
+|-          |(初期状態遷移) |OTHER        |PS4リモートプレイのウィンドウを前面に出す   |
 |OTHER      |DEAL_CARDS     |DEALT_CARDS  |残すカードを選択して"くばる"ボタンを押下    |
 |OTHER      |OTHER          |OTHER        |Enterキーを押す                             |
-|OTHER      |ROYAL_STRAIG.. |FINAL        |PSボタンを押して中断し、状態遷移を終了する |
+|OTHER      |ROYAL_STRAIG.. |FINAL        |PSボタンを押して中断し、状態遷移を終了する  |
 |DEALT_CARDS|OTHER          |OTHER        |Enterキーを押す                             |
-|DEATL_CARDS|ROYAL_STRAIG.. |FINAL        |PSボタンを押して中断し、状態遷移を終了する |
+|DEATL_CARDS|ROYAL_STRAIG.. |FINAL        |PSボタンを押して中断し、状態遷移を終了する  |
 |DEALT_CARDS|BEFORE_BET_COIN|RETRY_OR_END |かけ金を入力してリトライ、または状態遷移終了|
 |OTHER      |BEFORE_BET_COIN|RETRY_OR_END |かけ金を入力してリトライ、または状態遷移終了|
 
