@@ -66,9 +66,6 @@ public class EventDispatcherTask {
      */
     private int debugRssEventCount = 0;
 
-    /** 初期化イベントの実施済みフラグ。 */
-    private boolean doneInitialEvent = false;
-
     /** 画面キャプチャを連続何回取得するか。 */
     private int captureBurstCount;
 
@@ -81,12 +78,6 @@ public class EventDispatcherTask {
     @Scheduled(fixedDelayString = "${autoplay.dq11.poker.event.timer-interval}")
     public void dispatchEvent() {
         LOGGER.debug("dispatchEvent start. timer-interval: {}ms", timerInterval);
-
-        // StatemachineがINITIAL_STATEになるまで初期化イベントを投げない
-        if (!doneInitialEvent && !stateMachine.getInitialState().equals(stateMachine.getState())) {
-            LOGGER.debug("Statemachine is not ready");
-            return;
-        }
 
         /*
          * 役が成立した際にカードが光るアニメーションが入るため、1回のキャプチャだとカード認識に失敗する可能性がある。
@@ -111,9 +102,7 @@ public class EventDispatcherTask {
         LOGGER.info("read cards: {}", cards.stream().map(c -> c.name()).collect(Collectors.joining(",")));
 
         Events event = null;
-        if (shouldSendInitialEvent()) {
-            event = Events.INITIAL_EVENT;
-        } else if (shouldSendRoyalStraightSlimeEvent(cards)) {
+        if (shouldSendRoyalStraightSlimeEvent(cards)) {
             event = Events.ROYAL_STRAIGHT_SLIME_EVENT;
         } else if (shouldSendDealCardsEvent(cards, screen)) {
             event = Events.DEAL_CARDS_EVENT;
@@ -138,20 +127,6 @@ public class EventDispatcherTask {
         captureHistory.add(screen, eventId, event, captureDateTime);
 
         LOGGER.debug("dispatchEvent end. dispatched event: {}", event);
-    }
-
-    /**
-     * 初期化イベントを送信すべきかを判定する。
-     * 
-     * @return イベントを送信するべきならtrue。それ以外はfalse。
-     */
-    private boolean shouldSendInitialEvent() {
-        if (!doneInitialEvent) {
-            // 初期化イベント
-            doneInitialEvent = true;
-            return true;
-        }
-        return false;
     }
 
     /**

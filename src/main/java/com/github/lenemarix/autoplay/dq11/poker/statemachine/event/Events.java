@@ -5,9 +5,6 @@ package com.github.lenemarix.autoplay.dq11.poker.statemachine.event;
  */
 public enum Events {
 
-    /** 初期化イベント。 */
-    INITIAL_EVENT,
-
     /** カード配布検知イベント。 */
     DEAL_CARDS_EVENT,
 

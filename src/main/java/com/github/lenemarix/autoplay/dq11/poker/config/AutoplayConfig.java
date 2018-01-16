@@ -11,8 +11,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.annotation.SchedulingConfigurer;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.statemachine.StateMachine;
 
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.event.CaptureHistory;
@@ -27,7 +31,7 @@ import com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States;
 @EnableScheduling
 @ConditionalOnProperty(name = "mode", havingValue = "AUTOPLAY")
 @ConfigurationProperties(prefix = "autoplay.dq11.poker.autoplay-config")
-public class AutoplayConfig {
+public class AutoplayConfig implements SchedulingConfigurer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AutoplayConfig.class);
 
@@ -43,8 +47,21 @@ public class AutoplayConfig {
     CaptureHistory captureHistory;
 
     @Bean
+    public TaskScheduler taskSchedulerForAutoplay() {
+        ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
+        taskScheduler.setThreadNamePrefix("autoplay-pool-");
+        taskScheduler.setPoolSize(2);
+        return taskScheduler;
+    }
+
+    @Bean
     public EventDispatcherTask eventDispatcherTask() {
         return new EventDispatcherTask();
+    }
+
+    @Override
+    public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+        taskRegistrar.setTaskScheduler(taskSchedulerForAutoplay());
     }
 
     /**

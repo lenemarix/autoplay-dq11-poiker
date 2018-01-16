@@ -2,12 +2,10 @@ package com.github.lenemarix.autoplay.dq11.poker.config;
 
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events.BEFORE_BET_COIN_EVENT;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events.DEAL_CARDS_EVENT;
-import static com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events.INITIAL_EVENT;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events.OTHER_EVENT;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events.ROYAL_STRAIGHT_SLIME_EVENT;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.DEALT_CARDS_STATE;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.FINAL_STATE;
-import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.INITIAL_STATE;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.OTHER_STATE;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.RETRY_OR_END_STATE;
 
@@ -15,8 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.TaskScheduler;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.config.EnableStateMachine;
 import org.springframework.statemachine.config.EnumStateMachineConfigurerAdapter;
@@ -43,19 +39,6 @@ import com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States;
 public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States, Events> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StateMachineConfig.class);
-
-    /**
-     * タスクスケジューラ。
-     * 
-     * @return タスクスケジューラ。
-     */
-    @Bean
-    public TaskScheduler taskScheduler() {
-        ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
-        taskScheduler.setThreadNamePrefix("autoplay-pool-");
-        taskScheduler.setPoolSize(5);
-        return taskScheduler;
-    }
 
     @Bean
     public ActivateWindowAction activateWindowAction() {
@@ -100,17 +83,16 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
     @Override
     public void configure(StateMachineConfigurationConfigurer<States, Events> config) throws Exception {
         config.withConfiguration()
-                .autoStartup(false)
-                .taskScheduler(taskScheduler());
+                .autoStartup(false);
     }
 
     @Override
     public void configure(StateMachineStateConfigurer<States, Events> states) throws Exception {
         // 各状態とEntry Actionの定義。
         states.withStates()
-                .initial(INITIAL_STATE, activateWindowAction())
-                .state(OTHER_STATE, enterKeyPushAction())
-                .state(DEALT_CARDS_STATE, decideExchangeCardAction())
+                .initial(OTHER_STATE, activateWindowAction())
+                .state(OTHER_STATE, enterKeyPushAction(), null)
+                .state(DEALT_CARDS_STATE, decideExchangeCardAction(), null)
                 .choice(RETRY_OR_END_STATE)
                 .end(FINAL_STATE);
     }
@@ -118,12 +100,6 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
     @Override
     public void configure(StateMachineTransitionConfigurer<States, Events> transitions) throws Exception {
         transitions
-                // 初期状態からその他状態へ (Statemachine起動後に自動で遷移する)。
-                .withExternal()
-                    .source(INITIAL_STATE)
-                    .target(OTHER_STATE)
-                    .event(INITIAL_EVENT)
-                    .and()
                 // "くばる"ボタンを見つけたら、その他状態からカード配布済み状態へ遷移。
                 .withExternal()
                     .source(OTHER_STATE)
