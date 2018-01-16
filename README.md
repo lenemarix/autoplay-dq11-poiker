@@ -93,7 +93,7 @@ PS4リモートプレイをPC上で実行することで、PS4のゲームをキ
 |OTHER        |OTHER          |OTHER        |Enterキーを押す                             |
 |DEALT_CARDS  |OTHER          |OTHER        |Enterキーを押す                             |
 |PLAYING_POKER|ROYAL_STRAIG.. |FINAL        |PSボタンを押して中断し、状態遷移を終了する  |
-|PLAYING_POKRE|BEFORE_BET_COIN|RETRY_OR_END |かけ金を入力してリトライ、または状態遷移終了|
+|PLAYING_POKER|BEFORE_BET_COIN|RETRY_OR_END |かけ金を入力してリトライ、または状態遷移終了|
 
 状態遷移のポイントは以下の通り
 
