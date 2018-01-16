@@ -60,9 +60,10 @@ PS4リモートプレイをPC上で実行することで、PS4のゲームをキ
 
 |状態                       |説明                                           |
 |---------------------------|-----------------------------------------------|
+|PLAYING_POKER_STATE        |ポーカープレイ中を表す親状態                   |
 |DEALT_CARDS_STATE          |カード配布済み状態                             |
-|RETRY_OR_END_STATE         |リトライ・終了選択状態                         |
 |OTHER_STATE                |その他の状態 (Enterキーを押しておけばいい状態) |
+|RETRY_OR_END_STATE         |リトライ・終了選択状態                         |
 |FINAL_STATE                |終了状態                                       |
 
 状態遷移はStateMachineがイベントを受信することで発生します。
@@ -83,16 +84,14 @@ PS4リモートプレイをPC上で実行することで、PS4のゲームをキ
 イベントを受信した際の状態遷移と実行されるActionは以下のとおりです。
 (各状態とイベントでは、末尾の"_STATE", "_EVENT"を省略)
 
-|遷移元状態 |イベント       |遷移先状態   |実行Action                                  |
-|-----------|---------------|-------------|--------------------------------------------|
-|-          |(初期状態遷移) |OTHER        |PS4リモートプレイのウィンドウを前面に出す   |
-|OTHER      |DEAL_CARDS     |DEALT_CARDS  |残すカードを選択して"くばる"ボタンを押下    |
-|OTHER      |OTHER          |OTHER        |Enterキーを押す                             |
-|OTHER      |ROYAL_STRAIG.. |FINAL        |PSボタンを押して中断し、状態遷移を終了する  |
-|DEALT_CARDS|OTHER          |OTHER        |Enterキーを押す                             |
-|DEATL_CARDS|ROYAL_STRAIG.. |FINAL        |PSボタンを押して中断し、状態遷移を終了する  |
-|DEALT_CARDS|BEFORE_BET_COIN|RETRY_OR_END |かけ金を入力してリトライ、または状態遷移終了|
-|OTHER      |BEFORE_BET_COIN|RETRY_OR_END |かけ金を入力してリトライ、または状態遷移終了|
+|遷移元状態   |イベント       |遷移先状態   |実行Action                                  |
+|-------------|---------------|-------------|--------------------------------------------|
+|-            |(初期状態遷移) |OTHER        |PS4リモートプレイのウィンドウを前面に出す   |
+|OTHER        |DEAL_CARDS     |DEALT_CARDS  |残すカードを選択して"くばる"ボタンを押下    |
+|OTHER        |OTHER          |OTHER        |Enterキーを押す                             |
+|DEALT_CARDS  |OTHER          |OTHER        |Enterキーを押す                             |
+|PLAYING_POKER|ROYAL_STRAIG.. |FINAL        |PSボタンを押して中断し、状態遷移を終了する  |
+|PLAYING_POKRE|BEFORE_BET_COIN|RETRY_OR_END |かけ金を入力してリトライ、または状態遷移終了|
 
 状態遷移のポイントは以下の通り
 
