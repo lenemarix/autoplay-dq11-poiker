@@ -5,7 +5,9 @@
       <transition xmi:type="uml:Transition" xmi:id="_sc5iAPrKEeeUSt9YWzBCGA" name="ROYAL_STRAIGHT_SLIME_EVENT" source="_0itoAPrJEeeUSt9YWzBCGA" target="_BF-UQPrKEeeUSt9YWzBCGA">
         <effect xmi:type="uml:Activity" xmi:id="_eEYH0PrLEeeUSt9YWzBCGA" name="PSボタンを押す"/>
       </transition>
-      <transition xmi:type="uml:Transition" xmi:id="_xc_XwPrKEeeUSt9YWzBCGA" name="[Retry]" source="__AQk8PrJEeeUSt9YWzBCGA" target="_0itoAPrJEeeUSt9YWzBCGA"/>
+      <transition xmi:type="uml:Transition" xmi:id="_xc_XwPrKEeeUSt9YWzBCGA" name="[Retry]" source="__AQk8PrJEeeUSt9YWzBCGA" target="_0itoAPrJEeeUSt9YWzBCGA">
+        <effect xmi:type="uml:Activity" xmi:id="_cHrbcPuYEeeRB6zorewZ2A" name="かけ金を設定してEnterキー押下"/>
+      </transition>
       <transition xmi:type="uml:Transition" xmi:id="_zMkfAPrKEeeUSt9YWzBCGA" name="[End]" source="__AQk8PrJEeeUSt9YWzBCGA" target="_BF-UQPrKEeeUSt9YWzBCGA"/>
       <transition xmi:type="uml:Transition" xmi:id="_i-xlQPrLEeeUSt9YWzBCGA" name="BEFORE_BET_COIN_EVENT" source="_0itoAPrJEeeUSt9YWzBCGA" target="__AQk8PrJEeeUSt9YWzBCGA"/>
       <transition xmi:type="uml:Transition" xmi:id="_k_uT4PrMEeeUSt9YWzBCGA" source="_lOl9sPrJEeeUSt9YWzBCGA" target="_0itoAPrJEeeUSt9YWzBCGA">
