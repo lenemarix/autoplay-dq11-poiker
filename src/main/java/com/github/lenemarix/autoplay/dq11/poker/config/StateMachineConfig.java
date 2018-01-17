@@ -96,7 +96,7 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
                 .end(FINAL_STATE)
                 .and()
                 .withStates()
-                    .parent(States.PLAYING_POKER_STATE)
+                    .parent(PLAYING_POKER_STATE)
                     .initial(OTHER_STATE)
                     .state(OTHER_STATE, enterKeyPushAction(), null)
                     .state(DEALT_CARDS_STATE, decideExchangeCardAction(), null);
