@@ -16,9 +16,9 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.statemachine.StateMachine;
 
-import com.github.lenemarix.autoplay.dq11.poker.model.BetCoinInputCapture;
+import com.github.lenemarix.autoplay.dq11.poker.model.CaptureManager;
+import com.github.lenemarix.autoplay.dq11.poker.model.CaptureManager.Capture;
 import com.github.lenemarix.autoplay.dq11.poker.model.Card;
-import com.github.lenemarix.autoplay.dq11.poker.model.DealCardsButtonCapture;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States;
 import com.github.lenemarix.autoplay.dq11.poker.util.CardReader;
 import com.github.lenemarix.autoplay.dq11.poker.util.ImageComparator;
@@ -46,10 +46,7 @@ public class EventDispatcherTask {
     CardReader cardReader;
 
     @Autowired
-    DealCardsButtonCapture dealCardsButtonCapture;
-
-    @Autowired
-    BetCoinInputCapture betCoinInputCapture;
+    CaptureManager captureRectangleManager;
 
     @Autowired
     CaptureHistory captureHistory;
@@ -139,6 +136,8 @@ public class EventDispatcherTask {
      * @return イベントを送信するべきならtrue。それ以外はfalse。
      */
     private boolean shouldSendDealCardsEvent(List<Card> cards, BufferedImage screen) {
+        Capture dealCardsButtonCapture = captureRectangleManager.getMap()
+                .get(CaptureManager.DEAL_CARDS_BUTTON);
         // "くばる"ボタンが表示される箇所の画面を抽出。
         BufferedImage capture = screen.getSubimage(
                 dealCardsButtonCapture.getX(),
@@ -186,6 +185,8 @@ public class EventDispatcherTask {
      * @return イベントを送信するべきならtrue。それ以外はfalse。
      */
     private boolean shouldSendBeforeBetCoinInputEvent(BufferedImage screen) {
+        Capture betCoinInputCapture = captureRectangleManager.getMap()
+                .get(CaptureManager.BET_COIN_INPUT);
         // かけ金入力欄が表示される箇所の画面を抽出。
         BufferedImage capture = screen.getSubimage(
                 betCoinInputCapture.getX(),

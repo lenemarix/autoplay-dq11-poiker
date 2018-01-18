@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.github.lenemarix.autoplay.dq11.poker.model.DealCardsButtonCapture;
+import com.github.lenemarix.autoplay.dq11.poker.model.CaptureManager;
+import com.github.lenemarix.autoplay.dq11.poker.model.CaptureManager.Capture;
 import com.github.lenemarix.autoplay.dq11.poker.util.ActivateWindowUtil;
 import com.github.lenemarix.autoplay.dq11.poker.util.ImageUtil;
 import com.github.lenemarix.autoplay.dq11.poker.util.RobotUtil;
@@ -31,7 +32,7 @@ public class CaptureDealCardsButtonRunner {
     ActivateWindowUtil activateWindowUtil;
 
     @Autowired
-    DealCardsButtonCapture dealCardsButtonCapture;
+    CaptureManager captureRectangleManager;
 
     /**
      * "くばる"ボタンを画像キャプチャを保存する。 "くばる"ボタンが表示されている状態で実行すること。
@@ -39,6 +40,8 @@ public class CaptureDealCardsButtonRunner {
     public void capture() {
         // PS4リモートプレイのウィンドウを前面に出す。
         activateWindowUtil.activate();
+        Capture dealCardsButtonCapture = captureRectangleManager.getMap()
+                .get(CaptureManager.DEAL_CARDS_BUTTON);
         try {
             BufferedImage gameScreen = robotUtil.captureGameScreen();
             imageUtil.imageToFile(gameScreen, dealCardsButtonCapture.getRectangle(),

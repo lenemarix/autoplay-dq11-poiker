@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.github.lenemarix.autoplay.dq11.poker.model.BetCoinInputCapture;
+import com.github.lenemarix.autoplay.dq11.poker.model.CaptureManager;
+import com.github.lenemarix.autoplay.dq11.poker.model.CaptureManager.Capture;
 import com.github.lenemarix.autoplay.dq11.poker.util.ActivateWindowUtil;
 import com.github.lenemarix.autoplay.dq11.poker.util.ImageUtil;
 import com.github.lenemarix.autoplay.dq11.poker.util.RobotUtil;
@@ -31,7 +32,7 @@ public class CaptureBetCoinInputRunner {
     ActivateWindowUtil activateWindowUtil;
 
     @Autowired
-    BetCoinInputCapture betCoinInputCapture;
+    CaptureManager captureRectangleManager;;
 
     /**
      * かけ金入力欄のキャプチャを行う。かけ金入力欄が表示され、0が設定されていること。
@@ -39,6 +40,8 @@ public class CaptureBetCoinInputRunner {
     public void capture() {
         // PS4リモートプレイのウィンドウを前面に出す。
         activateWindowUtil.activate();
+        Capture betCoinInputCapture = captureRectangleManager.getMap()
+                .get(CaptureManager.BET_COIN_INPUT);
         try {
             BufferedImage gameScreen = robotUtil.captureGameScreen();
             imageUtil.imageToFile(gameScreen, betCoinInputCapture.getRectangle(),
