@@ -92,13 +92,15 @@ PS4リモートプレイをPC上で実行することで、PS4のゲームをキ
 |OTHER        |DEAL_CARDS     |DEALT_CARDS  |残すカードを選択して"くばる"ボタンを押下    |
 |OTHER        |OTHER          |OTHER        |Enterキーを押す                             |
 |DEALT_CARDS  |OTHER          |OTHER        |Enterキーを押す                             |
-|PLAYING_POKER|ROYAL_STRAIG.. |FINAL        |状態遷移を終了する  |
+|PLAYING_POKER|ROYAL_STRAIG.. |FINAL        |30秒待機後Shareボタンを押して状態遷移を終了 |
 |PLAYING_POKER|BEFORE_BET_COIN|RETRY_OR_END |かけ金を入力してリトライ、または状態遷移終了|
 
 状態遷移のポイントは以下の通り
 
 * "くばる"ボタンを検出するとカード選択の動作を行う
-* ロイヤルストレートスライムを検出すると状態遷移を終了する
+* ロイヤルストレートスライムを検出すると30秒待ってからShareボタンを押して状態遷移を終了する
+    * そのままビデオクリップを保存すれば、終了前の動画を見ることができる
+    * 30秒待つのはファンファーレが鳴り終わってからビデオクリップを保存するため
 * かけ金入力欄を検出すると設定に応じてリトライまたは状態遷移終了となる
     * かけ金入力欄は通常は表示されないが、キーの取りこぼしやタイミングの問題で、
       ポーカーを続けるかという問いに"いいえ"を答えてしまった場合に起こりうる予期せぬ状態
@@ -296,61 +298,109 @@ PS4リモートプレイのウィンドウ内のゲーム画面の幅と高さ�
 ウィンドウのメニューバーなどは含まない。
 基本的に960x540で固定。
 
-### autoplay.dq11.poker.dealt-cards-capture.card-s10-filepath=capture/S10.png
+### autoplay.dq11.poker.capture.card-file-path-map.s10=capture/S10.png
 スライムの10のカードのキャプチャ画像のファイルパス。
 
-### autoplay.dq11.poker.dealt-cards-capture.card-s-j-filepath=capture/SJ.png
+### autoplay.dq11.poker.capture.card-file-path-map.sj=capture/SJ.png
 スライムのJのカードのキャプチャ画像のファイルパス。
 
-### autoplay.dq11.poker.dealt-cards-capture.card-s-q-filepath=capture/SQ.png
+### autoplay.dq11.poker.capture.card-file-path-map.sq=capture/SQ.png
 スライムのQのカードのキャプチャ画像のファイルパス。
 
-### autoplay.dq11.poker.dealt-cards-capture.card-s-k-filepath=capture/SK.png
+### autoplay.dq11.poker.capture.card-file-path-map.sk=capture/SK.png
 スライムのKのカードのキャプチャ画像のファイルパス。
 
-### autoplay.dq11.poker.dealt-cards-capture.card-s-a-filepath=capture/SA.png
+### autoplay.dq11.poker.capture.card-file-path-map.sa=capture/SA.png
 スライムのAのカードのキャプチャ画像のファイルパス。
 
-### autoplay.dq11.poker.dealt-cards-capture.x=85, 256, 427, 598, 769
-配られた5枚のカードのゲーム画面内X座標。左からカード1枚め。
+### autoplay.dq11.poker.capture.card-rectangle-list[0].x=85
+配られた5枚のカードのうち、左から1枚目のカードのゲーム画面内X座標。
 
-### autoplay.dq11.poker.dealt-cards-capture.y=195
-配られた5枚のカードのゲーム画面内Y座標。
+### autoplay.dq11.poker.capture.card-rectangle-list[0].y=195
+配られた5枚のカードのうち、左から1枚目のカードのゲーム画面内Y座標。
 
-### autoplay.dq11.poker.dealt-cards-capture.width=105
-配られた5枚のカードのゲーム画面内での幅。
+### autoplay.dq11.poker.capture.card-rectangle-list[0].width=105
+配られた5枚のカードのうち、左から1枚目のカードのゲーム画面内での幅。
 
-### autoplay.dq11.poker.dealt-cards-capture.height=150
-配られた5枚のカードのゲーム画面内での高さ。
+### autoplay.dq11.poker.capture.card-rectangle-list[0].height=150
+配られた5枚のカードのうち、左から1枚目のカードのゲーム画面内での高さ。
 
-### autoplay.dq11.poker.deal-cards-button-capture.filepath=capture/dealCardsButton.png
+### autoplay.dq11.poker.capture.card-rectangle-list[1].x=256
+配られた5枚のカードのうち、左から2枚目のカードのゲーム画面内X座標。
+
+### autoplay.dq11.poker.capture.card-rectangle-list[1].y=195
+配られた5枚のカードのうち、左から2枚目のカードのゲーム画面内Y座標。
+
+### autoplay.dq11.poker.capture.card-rectangle-list[1].width=105
+配られた5枚のカードのうち、左から2枚目のカードのゲーム画面内での幅。
+
+### autoplay.dq11.poker.capture.card-rectangle-list[1].height=150
+配られた5枚のカードのうち、左から2枚目のカードのゲーム画面内での高さ。
+
+### autoplay.dq11.poker.capture.card-rectangle-list[2].x=427
+配られた5枚のカードのうち、左から3枚目のカードのゲーム画面内X座標。
+
+### autoplay.dq11.poker.capture.card-rectangle-list[2].y=195
+配られた5枚のカードのうち、左から3枚目のカードのゲーム画面内Y座標。
+
+### autoplay.dq11.poker.capture.card-rectangle-list[2].width=105
+配られた5枚のカードのうち、左から3枚目のカードのゲーム画面内での幅。
+
+### autoplay.dq11.poker.capture.card-rectangle-list[2].height=150
+配られた5枚のカードのうち、左から3枚目のカードのゲーム画面内での高さ。
+
+### autoplay.dq11.poker.capture.card-rectangle-list[3].x=598
+配られた5枚のカードのうち、左から4枚目のカードのゲーム画面内X座標。
+
+### autoplay.dq11.poker.capture.card-rectangle-list[3].y=195
+配られた5枚のカードのうち、左から4枚目のカードのゲーム画面内Y座標。
+
+### autoplay.dq11.poker.capture.card-rectangle-list[3].width=105
+配られた5枚のカードのうち、左から4枚目のカードのゲーム画面内での幅。
+
+### autoplay.dq11.poker.capture.card-rectangle-list[3].height=150
+配られた5枚のカードのうち、左から4枚目のカードのゲーム画面内での高さ。
+
+### autoplay.dq11.poker.capture.card-rectangle-list[4].x=769
+配られた5枚のカードのうち、左から5枚目のカードのゲーム画面内X座標。
+
+### autoplay.dq11.poker.capture.card-rectangle-list[4].y=195
+配られた5枚のカードのうち、左から5枚目のカードのゲーム画面内Y座標。
+
+### autoplay.dq11.poker.capture.card-rectangle-list[4].width=105
+配られた5枚のカードのうち、左から5枚目のカードのゲーム画面内での幅。
+
+### autoplay.dq11.poker.capture.card-rectangle-list[4].height=150
+配られた5枚のカードのうち、左から5枚目のカードのゲーム画面内での高さ。
+
+### autoplay.dq11.poker.capture.file-path-map.deal-cards-button-capture=capture/dealCardsButton.png
 "くばる"ボタンのキャプチャ画像のファイルパス。
 
-### autoplay.dq11.poker.deal-cards-button-capture.x=445
+### autoplay.dq11.poker.capture.rectangle-map.deal-cards-button-capture.x=445
 "くばる"ボタンのゲーム画面内でのX座標。
 
-### autoplay.dq11.poker.deal-cards-button-capture.y=400
+### autoplay.dq11.poker.capture.rectangle-map.deal-cards-button-capture.y=400
 "くばる"ボタンのゲーム画面内でのY座標。
 
-### autoplay.dq11.poker.deal-cards-button-capture.width=65
+### autoplay.dq11.poker.capture.rectangle-map.deal-cards-button-capture.width=65
 "くばる"ボタンのゲーム画面内での幅。
 
-### autoplay.dq11.poker.deal-cards-button-capture.height=30
+### autoplay.dq11.poker.capture.rectangle-map.deal-cards-button-capture.height=30
 "くばる"ボタンのゲーム画面内での高さ。
 
-### autoplay.dq11.poker.bet-coin-input-capture.filepath=capture/betCoinInput.png
+### autoplay.dq11.poker.capture.file-path-map.bet-coin-input-capture=capture/betCoinInput.png
 かけ金入力欄のキャプチャ画像のファイルパス。
 
-### autoplay.dq11.poker.bet-coin-input-capture.x=490
+### autoplay.dq11.poker.capture.rectangle-map.bet-coin-input-capture.x=490
 かけ金入力欄のゲーム内でのX座標。
 
-### autoplay.dq11.poker.bet-coin-input-capture.y=440
+### autoplay.dq11.poker.capture.rectangle-map.bet-coin-input-capture.y=440
 かけ金入力欄のゲーム内でのY座標。
 
-### autoplay.dq11.poker.bet-coin-input-capture.width=170
+### autoplay.dq11.poker.capture.rectangle-map.bet-coin-input-capture.width=170
 かけ金入力欄のゲーム内での幅。
 
-### autoplay.dq11.poker.bet-coin-input-capture.height=80
+### autoplay.dq11.poker.capture.rectangle-map.bet-coin-input-capture.height=80
 かけ金入力欄のゲーム内での高さ。
 
 ### autoplay.dq11.poker.robot.autodelay=200
@@ -402,6 +452,18 @@ PS4リモートプレイのウィンドウ内のゲーム画面の幅と高さ�
 ### autoplay.dq11.poker.mouse-click-activate-window.mouse-click-y=55
 マウスクリックでウィンドウをアクティブ化する際にクリックするゲーム画面内のY座標。
 実際の座標はこの値にgame-screen.location-yの値が加算される。
+
+### autoplay.dq11.poker.push-share-button-action.share-button-x=320
+Shareボタンをマウスでクリックする際のゲーム画面内でのX座標。
+実際の座標はこの値にgame-screen.location-yの値が加算される。
+
+### autoplay.dq11.poker.push-share-button-action.share-button-y=520
+Shareボタンをマウスでクリックする際のゲーム画面内でのY座標。
+実際の座標はこの値にgame-screen.location-yの値が加算される。
+
+### autoplay.dq11.poker.push-share-button-action.push-delay=30000
+Shareボタンをマウスでクリックする前に待つ時間(ms)。
+ファンファーレが鳴り終わるの待つ想定。
 
 ### autoplay.dq11.poker.bet-coin-action.number-of-times-to-push-up-arrow=10
 自動実行中にかけ金入力画面を検出し、リトライする際に、かけるコインの選択で上キーを押す回数。

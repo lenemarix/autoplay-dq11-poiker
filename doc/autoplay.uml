@@ -2,7 +2,9 @@
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_vJu5kO3CEee4WvkakFiolQ" name="RootElement">
   <packagedElement xmi:type="uml:StateMachine" xmi:id="_z7R9AO3CEee4WvkakFiolQ" name="StateMachine">
     <region xmi:type="uml:Region" xmi:id="_0waOMO3CEee4WvkakFiolQ" name="Region1">
-      <transition xmi:type="uml:Transition" xmi:id="_sc5iAPrKEeeUSt9YWzBCGA" name="ROYAL_STRAIGHT_SLIME_EVENT" source="_0itoAPrJEeeUSt9YWzBCGA" target="_BF-UQPrKEeeUSt9YWzBCGA"/>
+      <transition xmi:type="uml:Transition" xmi:id="_sc5iAPrKEeeUSt9YWzBCGA" name="ROYAL_STRAIGHT_SLIME_EVENT" source="_0itoAPrJEeeUSt9YWzBCGA" target="_BF-UQPrKEeeUSt9YWzBCGA">
+        <effect xmi:type="uml:Activity" xmi:id="_q-kykP0qEeeElNddlx6LKQ" name="30秒待機後Shareボタンを押す"/>
+      </transition>
       <transition xmi:type="uml:Transition" xmi:id="_xc_XwPrKEeeUSt9YWzBCGA" name="[Retry]" source="__AQk8PrJEeeUSt9YWzBCGA" target="_0itoAPrJEeeUSt9YWzBCGA">
         <effect xmi:type="uml:Activity" xmi:id="_cHrbcPuYEeeRB6zorewZ2A" name="かけ金を設定してEnterキー押下"/>
       </transition>

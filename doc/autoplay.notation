@@ -224,11 +224,11 @@
   <edges xmi:type="notation:Connector" xmi:id="_sdNEAPrKEeeUSt9YWzBCGA" type="Transition_Edge" source="_0jBKAPrJEeeUSt9YWzBCGA" target="_BGRPMPrKEeeUSt9YWzBCGA">
     <children xmi:type="notation:DecorationNode" xmi:id="_sdNEA_rKEeeUSt9YWzBCGA" type="Transition_NameLabel">
       <styles xmi:type="notation:BooleanValueStyle" xmi:id="_YjD0UPrLEeeUSt9YWzBCGA" name="IS_UPDATED_POSITION" booleanValue="true"/>
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_sdNEBPrKEeeUSt9YWzBCGA" x="-15" y="183"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_sdNEBPrKEeeUSt9YWzBCGA" x="-15" y="197"/>
     </children>
     <children xmi:type="notation:DecorationNode" xmi:id="_sdNEBfrKEeeUSt9YWzBCGA" type="Transition_GuardLabel">
       <styles xmi:type="notation:BooleanValueStyle" xmi:id="_YjWvQPrLEeeUSt9YWzBCGA" name="IS_UPDATED_POSITION" booleanValue="true"/>
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_sdNEBvrKEeeUSt9YWzBCGA" x="3" y="165"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_sdNEBvrKEeeUSt9YWzBCGA" x="1" y="223"/>
     </children>
     <children xmi:type="notation:DecorationNode" xmi:id="_sdNEB_rKEeeUSt9YWzBCGA" type="Transition_StereotypeLabel">
       <styles xmi:type="notation:BooleanValueStyle" xmi:id="_YjggQPrLEeeUSt9YWzBCGA" name="IS_UPDATED_POSITION" booleanValue="true"/>
