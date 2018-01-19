@@ -2,6 +2,8 @@ package com.github.lenemarix.autoplay.dq11.poker.config;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +38,8 @@ public class AutoplayConfig implements SchedulingConfigurer {
     private static final Logger LOGGER = LoggerFactory.getLogger(AutoplayConfig.class);
 
     private int applicationExitCheckInterval;
+    
+    private LocalDateTime startTime = LocalDateTime.now();
 
     @Autowired
     ConfigurableApplicationContext context;
@@ -86,9 +90,20 @@ public class AutoplayConfig implements SchedulingConfigurer {
                 && stateMachine.isComplete()) {
             LOGGER.info("statemachine is complete. start shutdown.");
             context.close();
+            loggingDurationTime();
         }
     }
 
+    private void loggingDurationTime() {
+        Duration duration = Duration.between(startTime, LocalDateTime.now());
+        long hours = duration.toHours();
+        long minutes = duration.toMinutes() - (hours * 60);
+        long seconds = duration.getSeconds() - (hours * 60 * 60) - (minutes * 60);
+
+        LOGGER.info("Playing poker duration: {}h:{}m:{}s ({})", hours, minutes, seconds, duration.toString());
+    }
+
+    
     public int getApplicationExitCheckInterval() {
         return applicationExitCheckInterval;
     }
