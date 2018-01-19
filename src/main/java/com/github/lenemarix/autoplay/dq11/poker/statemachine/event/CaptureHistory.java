@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -87,7 +88,14 @@ public class CaptureHistory {
      *             ファイルの削除に失敗した場合。
      */
     private void deleteOldFile() throws IOException {
-        Files.list(Paths.get(saveDirectory)).map(p -> p.toFile()).filter(f -> f.isFile())
+        Path dirPath = Paths.get(saveDirectory);
+
+        File dir = dirPath.toFile();
+        if (!dir.exists() || !dir.isDirectory()) {
+            return;
+        }
+
+        Files.list(dirPath).map(p -> p.toFile()).filter(f -> f.isFile())
                 .filter(f -> f.getName().matches("[0-9]{14}\\.png")).forEach(f -> {
                     LOGGER.debug("delete old capture file: {}", f.getAbsolutePath());
                     f.delete();
