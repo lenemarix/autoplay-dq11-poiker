@@ -1,5 +1,8 @@
 package com.github.lenemarix.autoplay.dq11.poker.statemachine.event;
 
+import static com.github.lenemarix.autoplay.dq11.poker.model.CaptureManager.CaptureKind.BET_COIN_INPUT_CAPTURE;
+import static com.github.lenemarix.autoplay.dq11.poker.model.CaptureManager.CaptureKind.DEAL_CARDS_BUTTON_CAPTURE;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -17,7 +20,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.statemachine.StateMachine;
 
 import com.github.lenemarix.autoplay.dq11.poker.model.CaptureManager;
-import com.github.lenemarix.autoplay.dq11.poker.model.CaptureManager.Capture;
+import com.github.lenemarix.autoplay.dq11.poker.model.CaptureRectangle;
 import com.github.lenemarix.autoplay.dq11.poker.model.Card;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States;
 import com.github.lenemarix.autoplay.dq11.poker.util.CardReader;
@@ -46,7 +49,7 @@ public class EventDispatcherTask {
     CardReader cardReader;
 
     @Autowired
-    CaptureManager captureRectangleManager;
+    CaptureManager captureManager;
 
     @Autowired
     CaptureHistory captureHistory;
@@ -136,22 +139,16 @@ public class EventDispatcherTask {
      * @return イベントを送信するべきならtrue。それ以外はfalse。
      */
     private boolean shouldSendDealCardsEvent(List<Card> cards, BufferedImage screen) {
-        Capture dealCardsButtonCapture = captureRectangleManager.getMap()
-                .get(CaptureManager.DEAL_CARDS_BUTTON);
-        // "くばる"ボタンが表示される箇所の画面を抽出。
-        BufferedImage capture = screen.getSubimage(
-                dealCardsButtonCapture.getX(),
-                dealCardsButtonCapture.getY(),
-                dealCardsButtonCapture.getWidth(),
-                dealCardsButtonCapture.getHeight());
+        CaptureRectangle captureRect = captureManager.getCaptureRectangle(DEAL_CARDS_BUTTON_CAPTURE);
+        String filePath = captureManager.getCaptureFilePath(DEAL_CARDS_BUTTON_CAPTURE);
         try {
             // "くばる"ボタンの画像とキャプチャが一致したらイベント送信。
-            if (imageComparator.compare(dealCardsButtonCapture.getFilepath(), capture)) {
+            if (imageComparator.compare(filePath, captureRect.getSubImage(screen))) {
                 return true;
             }
         } catch (IOException e) {
             // ファイル読み込みに失敗したらログを出して継続。
-            LOGGER.error("fail to read deal cards button image file: {}", dealCardsButtonCapture.getFilepath(), e);
+            LOGGER.error("fail to read deal cards button image file: {}", filePath, e);
         }
         return false;
     }
@@ -185,22 +182,16 @@ public class EventDispatcherTask {
      * @return イベントを送信するべきならtrue。それ以外はfalse。
      */
     private boolean shouldSendBeforeBetCoinInputEvent(BufferedImage screen) {
-        Capture betCoinInputCapture = captureRectangleManager.getMap()
-                .get(CaptureManager.BET_COIN_INPUT);
-        // かけ金入力欄が表示される箇所の画面を抽出。
-        BufferedImage capture = screen.getSubimage(
-                betCoinInputCapture.getX(),
-                betCoinInputCapture.getY(),
-                betCoinInputCapture.getWidth(),
-                betCoinInputCapture.getHeight());
+        CaptureRectangle captureRect = captureManager.getCaptureRectangle(BET_COIN_INPUT_CAPTURE);
+        String filePath = captureManager.getCaptureFilePath(BET_COIN_INPUT_CAPTURE);
         try {
             // かけ金入力欄の画像とキャプチャが一致したらイベント送信。
-            if (imageComparator.compare(betCoinInputCapture.getFilepath(), capture)) {
+            if (imageComparator.compare(filePath, captureRect.getSubImage(screen))) {
                 return true;
             }
         } catch (IOException e) {
             // ファイル読み込みに失敗したらログを出して継続。
-            LOGGER.error("fail to read bet coin input image file: {}", betCoinInputCapture.getFilepath(), e);
+            LOGGER.error("fail to read bet coin input image file: {}", filePath, e);
         }
         return false;
     }

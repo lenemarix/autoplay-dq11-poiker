@@ -12,9 +12,7 @@ import org.springframework.statemachine.StateMachine;
 
 import com.github.lenemarix.autoplay.dq11.poker.model.Card;
 import com.github.lenemarix.autoplay.dq11.poker.model.Mode;
-import com.github.lenemarix.autoplay.dq11.poker.prepare.CaptureBetCoinInputRunner;
-import com.github.lenemarix.autoplay.dq11.poker.prepare.CaptureCardRunner;
-import com.github.lenemarix.autoplay.dq11.poker.prepare.CaptureDealCardsButtonRunner;
+import com.github.lenemarix.autoplay.dq11.poker.prepare.CaptureRunner;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States;
 
@@ -29,13 +27,7 @@ public class AutoplayApplication implements ApplicationRunner {
     private static final Logger LOGGER = LoggerFactory.getLogger(AutoplayApplication.class);
 
     @Autowired
-    CaptureCardRunner captureCardRunner;
-
-    @Autowired
-    CaptureDealCardsButtonRunner captureDealCardsButtonRunner;
-
-    @Autowired
-    CaptureBetCoinInputRunner captureBetCoinInputRunner;
+    CaptureRunner captureRunner;
 
     @Autowired(required = false)
     StateMachine<States, Events> stateMachine;
@@ -60,13 +52,13 @@ public class AutoplayApplication implements ApplicationRunner {
             stateMachine.start();
             break;
         case CAPTURE_CARD:
-            captureCardRunner.capture(captureCardNumber, captureCardType);
+            captureRunner.captureCard(captureCardNumber, captureCardType);
             break;
         case CAPTURE_DEAL_CARDS_BUTTON:
-            captureDealCardsButtonRunner.capture();
+            captureRunner.captureDealCardsButton();
             break;
         case CAPTURE_BET_COIN_INPUT:
-            captureBetCoinInputRunner.capture();
+            captureRunner.captureBetCoinInputCapture();
             break;
         default:
             // do nothing in some particular cases (e.g. for test)

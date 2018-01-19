@@ -10,8 +10,6 @@ import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.PLAYING_POKER_STATE;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.RETRY_OR_END_STATE;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.statemachine.StateMachine;
@@ -37,8 +35,6 @@ import com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States;
 @Configuration
 @EnableStateMachine
 public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States, Events> {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(StateMachineConfig.class);
 
     @Bean
     public ActivateWindowAction activateWindowAction() {

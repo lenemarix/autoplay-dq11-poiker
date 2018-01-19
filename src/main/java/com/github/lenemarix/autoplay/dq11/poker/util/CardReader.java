@@ -11,8 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.github.lenemarix.autoplay.dq11.poker.model.CaptureManager;
+import com.github.lenemarix.autoplay.dq11.poker.model.CaptureRectangle;
 import com.github.lenemarix.autoplay.dq11.poker.model.Card;
-import com.github.lenemarix.autoplay.dq11.poker.model.DealtCardsCapture;
 
 /**
  * カードの読み込みを行うクラス。
@@ -29,7 +30,7 @@ public class CardReader {
     ImageComparator imageComparator;
 
     @Autowired
-    DealtCardsCapture dealtCardsCapture;
+    CaptureManager captureManager;
 
     /**
      * 指定されたカードが保持すべきカードかを判定する。
@@ -60,14 +61,15 @@ public class CardReader {
      * 
      * @param cardNumber
      *            カード番号(左側から1)。
-     * @parma screen ゲーム画面のスクリーンショット画像。
+     * @param screen ゲーム画面のスクリーンショット画像。
      * @return カードの種類。
      */
     public Card readCard(int cardNumber, BufferedImage screen) {
+        CaptureRectangle capture = captureManager.getCardCapture(cardNumber);
         // 指定のカード番号の画像イメージを抽出。
-        BufferedImage capturedCardImage = screen.getSubimage(dealtCardsCapture.getX().get(cardNumber - 1),
-                dealtCardsCapture.getY(), dealtCardsCapture.getWidth(), dealtCardsCapture.getHeight());
-        List<Card> recognizedCards = dealtCardsCapture.getCardCaptureFileMap()
+        BufferedImage capturedCardImage = capture.getSubImage(screen);
+
+        List<Card> recognizedCards = captureManager.getCardFilePathMap()
                 .entrySet()
                 .stream()
                 .filter(e -> compareCard(capturedCardImage, e.getValue()))
