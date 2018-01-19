@@ -105,6 +105,8 @@ public class EventDispatcherTask {
             event = Events.DEAL_CARDS_EVENT;
         } else if (shouldSendBeforeBetCoinInputEvent(screen)) {
             event = Events.BEFORE_BET_COIN_EVENT;
+        } else if (shoudSendDoubleupChanceSelectEvent(screen)) {
+            event = Events.DOUBLEUP_CHANCE_EVENT;
         } else {
             event = Events.OTHER_EVENT;
         }
@@ -203,6 +205,44 @@ public class EventDispatcherTask {
             LOGGER.error("fail to read bet coin input image file: {}", betCoinInputCapture.getFilepath(), e);
         }
         return false;
+    }
+    
+    private boolean shoudSendDoubleupChanceSelectEvent(BufferedImage screen) {
+        Capture doubleupChnaceSelectDialogCapture = captureRectangleManager.getMap()
+                .get(CaptureManager.DOUBLEUP_CHANCE_SELECT_DIALOG);
+        Capture doubleupChnaceSelectMessageCapture = captureRectangleManager.getMap()
+                .get(CaptureManager.DOUBLEUP_CHANCE_SELECT_MESSAGE);
+        // ダブルアップチャンスの選択ダイアログを取得。
+        BufferedImage capture = screen.getSubimage(
+                doubleupChnaceSelectDialogCapture.getX(),
+                doubleupChnaceSelectDialogCapture.getY(),
+                doubleupChnaceSelectDialogCapture.getWidth(),
+                doubleupChnaceSelectDialogCapture.getHeight());
+        BufferedImage capture2 = screen.getSubimage(
+                doubleupChnaceSelectMessageCapture.getX(),
+                doubleupChnaceSelectMessageCapture.getY(),
+                doubleupChnaceSelectMessageCapture.getWidth(),
+                doubleupChnaceSelectMessageCapture.getHeight());
+        boolean result1 = false;
+        boolean result2 = false;
+        try {
+            if (imageComparator.compare(doubleupChnaceSelectDialogCapture.getFilepath(), capture)) {
+                result1 = true;
+            }
+        } catch (IOException e) {
+            // ファイル読み込みに失敗したらログを出して継続。
+            LOGGER.error("fail to read doubleup chance select dialog image file: {}", doubleupChnaceSelectDialogCapture.getFilepath(), e);
+        }
+        try {
+            if (imageComparator.compare(doubleupChnaceSelectMessageCapture.getFilepath(), capture2)) {
+                    result2 = true;
+            }
+        } catch (IOException e) {
+            // ファイル読み込みに失敗したらログを出して継続。
+            LOGGER.error("fail to read doubleup chance select message image file: {}", doubleupChnaceSelectMessageCapture.getFilepath(), e);
+        }
+        
+        return result1 && result2;
     }
 
     public int getTimerInterval() {

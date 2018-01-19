@@ -17,6 +17,9 @@ public enum Mode {
     /** "かけ金入力欄の画像キャプチャを行うモード(準備用)。 */
     CAPTURE_BET_COIN_INPUT,
 
+    /** "ダブルアップチャンス選択時の画像キャプチャを行うモード(準備用)。 */
+    DOUBLEUP_CHANCE_SELECT,
+
     /** テストモード(単体試験時などに使用)。 */
     TEST
 }

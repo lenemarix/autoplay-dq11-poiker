@@ -16,6 +16,8 @@ public class CaptureManager {
 
     public static final String DEAL_CARDS_BUTTON = "deal-cards-button";
     public static final String BET_COIN_INPUT = "bet-coin-input";
+    public static final String DOUBLEUP_CHANCE_SELECT_DIALOG = "doubleup-chance-select-dialog";
+    public static final String DOUBLEUP_CHANCE_SELECT_MESSAGE = "doubleup-chance-select-message";
     
     private Map<String, Capture> map = new HashMap<>();
 

@@ -25,6 +25,7 @@ public class LoggingStatemachineListener {
 
     private LocalDateTime startTime;
     
+    // TODO 親の状態遷移マシンと子の状態遷移マシンの両方で動いている
     @OnStateMachineStart
     public void onStateMachineStart() {
         startTime = LocalDateTime.now();

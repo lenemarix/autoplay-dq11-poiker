@@ -14,6 +14,9 @@ public enum Events {
     /** かけ金入力待ち検知イベント。 */
     BEFORE_BET_COIN_EVENT,
 
+    /** ダブルアップチャンスイベント。 */
+    DOUBLEUP_CHANCE_EVENT,
+    
     /** その他イベント。 */
     OTHER_EVENT,
 

@@ -2,9 +2,11 @@ package com.github.lenemarix.autoplay.dq11.poker.config;
 
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events.BEFORE_BET_COIN_EVENT;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events.DEAL_CARDS_EVENT;
+import static com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events.DOUBLEUP_CHANCE_EVENT;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events.OTHER_EVENT;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events.ROYAL_STRAIGHT_SLIME_EVENT;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.DEALT_CARDS_STATE;
+import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.DOUBLEUP_CHANCE_SELECT_STATE;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.FINAL_STATE;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.OTHER_STATE;
 import static com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States.PLAYING_POKER_STATE;
@@ -23,6 +25,7 @@ import org.springframework.statemachine.config.builders.StateMachineTransitionCo
 
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.action.ActivateWindowAction;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.action.BetCoinAction;
+import com.github.lenemarix.autoplay.dq11.poker.statemachine.action.CancelDoubleupChanceAction;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.action.DecideExchangeCardAction;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.action.EnterKeyPushAction;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.action.PushDealButtonAction;
@@ -70,6 +73,11 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
     public PushPsButtonAction pushPsButtonAction() {
         return new PushPsButtonAction();
     }
+    
+    @Bean
+    public CancelDoubleupChanceAction cancelDoubleupChanceAction() {
+        return new CancelDoubleupChanceAction();
+    }
 
     @Bean
     public RetryPushDealButtonGuard retryPushDealButtonGuard() {
@@ -93,6 +101,7 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
         states.withStates()
                 .initial(PLAYING_POKER_STATE, activateWindowAction())
                 .choice(RETRY_OR_END_STATE)
+                .state(DOUBLEUP_CHANCE_SELECT_STATE, cancelDoubleupChanceAction(), null)
                 .end(FINAL_STATE)
                 .and()
                 .withStates()
@@ -135,6 +144,16 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
                     .source(DEALT_CARDS_STATE)
                     .target(OTHER_STATE)
                     .event(OTHER_EVENT)
+                    .and()
+                .withExternal()
+                    .source(PLAYING_POKER_STATE)
+                    .target(DOUBLEUP_CHANCE_SELECT_STATE)
+                    .event(DOUBLEUP_CHANCE_EVENT)
+                    .and()
+                .withExternal()
+                    .source(DOUBLEUP_CHANCE_SELECT_STATE)
+                    .target(OTHER_STATE)
+                    .event(Events.OTHER_EVENT)
                     .and()
                 // 予期せぬ状態になったときにリトライかアプリケーション終了を判定する。
                 .withChoice()
