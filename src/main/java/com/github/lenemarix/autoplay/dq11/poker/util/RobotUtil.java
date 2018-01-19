@@ -2,6 +2,7 @@ package com.github.lenemarix.autoplay.dq11.poker.util;
 
 import java.awt.Rectangle;
 import java.awt.Robot;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -131,6 +132,13 @@ public class RobotUtil {
      */
     public void rightKeyPress() {
         keyPress(KeyEvent.VK_RIGHT);
+    }
+
+    /**
+     * マウスを左クリックする。
+     */
+    public void mouseLeftPress() {
+       mousePress(InputEvent.BUTTON1_DOWN_MASK);
     }
 
     /**

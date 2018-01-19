@@ -42,7 +42,7 @@ public interface ActivateWindowUtil {
             LOGGER.info("activate ps4 remote play window");
             robotUtil.mouseMove(mouseClickX + gameScreen.getLocationX(),
                     mouseClickY + gameScreen.getLocationY());
-            robotUtil.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            robotUtil.mouseLeftPress();
 
         }
 
