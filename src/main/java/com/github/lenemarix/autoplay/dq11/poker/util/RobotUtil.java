@@ -5,7 +5,6 @@ import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -174,6 +173,15 @@ public class RobotUtil {
      * Robotに設定されているautoDelay値の分だけ待つ。
      */
     public void delay() {
-        robot.delay(robot.getAutoDelay());
+        delay(robot.getAutoDelay());
+    }
+
+    /**
+     * 指定時間だけ待つ。
+     * 
+     * @param ms 待機時間(ms)。
+     */
+    public void delay(int ms) {
+        robot.delay(ms);
     }
 }
