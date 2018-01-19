@@ -61,10 +61,8 @@ public class CaptureRunner {
      * 指定されたカード番号のカードを指定されたカード種別のカードとしてキャプチャし、保存する。
      * キャプチャしたいカードが表示されている状態で実行すること。
      * 
-     * @param cardNumber
-     *            カード番号(左から1枚め)。
-     * @param cardType
-     *            カード種別。
+     * @param cardNumber カード番号(左から1枚め)。
+     * @param cardType カード種別。
      */
     public void captureCard(int cardNumber, Card cardType) {
         CaptureRectangle capture = captureManager.getCardCapture(cardNumber);
@@ -75,12 +73,9 @@ public class CaptureRunner {
     /**
      * キャプチャを行う。
      * 
-     * @param captureRect
-     *            キャプチャ範囲。
-     * @param filePath
-     *            キャプチャ保存先。
-     * @param captureName
-     *            キャプチャする画面部品名。ログ出力で使用。
+     * @param captureRect キャプチャ範囲。
+     * @param filePath キャプチャ保存先。
+     * @param captureName キャプチャする画面部品名。ログ出力で使用。
      */
     private void capture(Rectangle captureRect, String filePath, String captureName) {
         // PS4リモートプレイのウィンドウを前面に出す。

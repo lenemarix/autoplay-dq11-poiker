@@ -28,8 +28,8 @@ import com.github.lenemarix.autoplay.dq11.poker.util.ImageComparator;
 import com.github.lenemarix.autoplay.dq11.poker.util.RobotUtil;
 
 /**
- * イベントを送信するクラス。
- * {@link @Scheduled}で定期的に画面キャプチャし、条件に応じたイベントを{@link StateMachine}に送信する。
+ * イベントを送信するクラス。 {@link @Scheduled}で定期的に画面キャプチャし、条件に応じたイベントを{@link StateMachine}
+ * に送信する。
  */
 @ConfigurationProperties(prefix = "autoplay.dq11.poker.event")
 public class EventDispatcherTask {
@@ -56,7 +56,7 @@ public class EventDispatcherTask {
 
     /**
      * イベント検知の周期(ms)。 application.propertiesでの補完の有効化、および、
-     * デバッグログ出力のためのフィールドであり、実際にはこのフィールドは設定には使われない。
+     * デバッグログ出力のためのフィールドであり、実際にはこのフィールドは設定には使われない。 
      * <code>@Scheduled</code>の<code>fixedDelayString</code>に指定された値が使われる。
      */
     private int timerInterval;
@@ -88,18 +88,20 @@ public class EventDispatcherTask {
 
         // それぞれのキャプチャでカード読み取りを実施。
         List<List<Card>> readCardFromAllCapture = captureList.stream()
-            .map(screen -> cardReader.readAllCards(screen))
-            .collect(Collectors.toList());
+                .map(screen -> cardReader.readAllCards(screen))
+                .collect(Collectors.toList());
 
         // それぞれのカード読み取り結果をマージ。
         List<Card> cards = readCardFromAllCapture.stream()
-            .reduce((list1, list2) -> cardReader.mergeCardList(list1, list2))
-            .get();
+                .reduce((list1, list2) -> cardReader.mergeCardList(list1, list2))
+                .get();
 
         // キャプチャ画像には最後のキャプチャを使う。
         BufferedImage screen = captureList.get(captureList.size() - 1);
 
-        LOGGER.info("read cards: {}", cards.stream().map(c -> c.name()).collect(Collectors.joining(",")));
+        LOGGER.info("read cards: {}", cards.stream()
+                .map(c -> c.name())
+                .collect(Collectors.joining(",")));
 
         Events event = null;
         if (shouldSendRoyalStraightSlimeEvent(cards)) {
@@ -132,10 +134,8 @@ public class EventDispatcherTask {
     /**
      * カード配布済みイベントを送信するべきか判定する。
      * 
-     * @param cards
-     *            配布されたカードのカード種別のリスト。
-     * @param screen
-     *            ゲーム画面のキャプチャ。
+     * @param cards 配布されたカードのカード種別のリスト。
+     * @param screen ゲーム画面のキャプチャ。
      * @return イベントを送信するべきならtrue。それ以外はfalse。
      */
     private boolean shouldSendDealCardsEvent(List<Card> cards, BufferedImage screen) {
@@ -156,8 +156,7 @@ public class EventDispatcherTask {
     /**
      * ロイヤルストレートスライムイベントを送信するべきか判定する。
      * 
-     * @param cards
-     *            配布されたカードのカード種別のリスト。
+     * @param cards 配布されたカードのカード種別のリスト。
      * @return イベントを送信するべきならtrue。それ以外はfalse。
      */
     private boolean shouldSendRoyalStraightSlimeEvent(List<Card> cards) {
@@ -177,8 +176,7 @@ public class EventDispatcherTask {
     /**
      * かけ金入力待ちイベントを送信するべきか判定する。
      * 
-     * @param screen
-     *            ゲーム画面のキャプチャ。
+     * @param screen ゲーム画面のキャプチャ。
      * @return イベントを送信するべきならtrue。それ以外はfalse。
      */
     private boolean shouldSendBeforeBetCoinInputEvent(BufferedImage screen) {
