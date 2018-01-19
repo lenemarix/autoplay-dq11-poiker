@@ -56,7 +56,7 @@ PS4リモートプレイをPC上で実行することで、PS4のゲームをキ
 ### 状態遷移
 本ツールはSpring Statemachineを使って内部で状態遷移を管理しています。
 
-![状態遷移図](https://raw.githubusercontent.com/lenemarix/autoplay-dq11-poker/master/doc/autoplay-statemachine.png)
+![状態遷移図](https://raw.githubusercontent.com/lenemarix/autoplay-dq11-poker/master/doc/autoplay.png)
 
 状態遷移で使用する状態は以下のとおりです。Statesのenumで定義されています。
 
@@ -92,7 +92,7 @@ PS4リモートプレイをPC上で実行することで、PS4のゲームをキ
 |OTHER        |DEAL_CARDS     |DEALT_CARDS  |残すカードを選択して"くばる"ボタンを押下    |
 |OTHER        |OTHER          |OTHER        |Enterキーを押す                             |
 |DEALT_CARDS  |OTHER          |OTHER        |Enterキーを押す                             |
-|PLAYING_POKER|ROYAL_STRAIG.. |FINAL        |PSボタンを押して中断し、状態遷移を終了する  |
+|PLAYING_POKER|ROYAL_STRAIG.. |FINAL        |状態遷移を終了する  |
 |PLAYING_POKER|BEFORE_BET_COIN|RETRY_OR_END |かけ金を入力してリトライ、または状態遷移終了|
 
 状態遷移のポイントは以下の通り
@@ -402,12 +402,6 @@ PS4リモートプレイのウィンドウ内のゲーム画面の幅と高さ�
 ### autoplay.dq11.poker.mouse-click-activate-window.mouse-click-y=55
 マウスクリックでウィンドウをアクティブ化する際にクリックするゲーム画面内のY座標。
 実際の座標はこの値にgame-screen.location-yの値が加算される。
-
-### autoplay.dq11.poker.push-ps-button-action.ps-button-x=480
-ゲームを中断する際に押すPSボタンのゲーム画面内のX座標。
-
-### autoplay.dq11.poker.push-ps-button-action.ps-button-y=515
-ゲームを中断する際に押すPSボタンのゲーム画面内のY座標。
 
 ### autoplay.dq11.poker.bet-coin-action.number-of-times-to-push-up-arrow=10
 自動実行中にかけ金入力画面を検出し、リトライする際に、かけるコインの選択で上キーを押す回数。

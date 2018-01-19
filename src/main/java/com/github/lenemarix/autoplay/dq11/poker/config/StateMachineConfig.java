@@ -26,7 +26,6 @@ import com.github.lenemarix.autoplay.dq11.poker.statemachine.action.BetCoinActio
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.action.DecideExchangeCardAction;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.action.EnterKeyPushAction;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.action.PushDealButtonAction;
-import com.github.lenemarix.autoplay.dq11.poker.statemachine.action.PushPsButtonAction;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.guard.RetryOnUnexpectedStateGuard;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.guard.RetryPushDealButtonGuard;
@@ -67,11 +66,6 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
     }
     
     @Bean
-    public PushPsButtonAction pushPsButtonAction() {
-        return new PushPsButtonAction();
-    }
-
-    @Bean
     public RetryPushDealButtonGuard retryPushDealButtonGuard() {
         return new RetryPushDealButtonGuard();
     }
@@ -110,7 +104,6 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
                     .source(PLAYING_POKER_STATE)
                     .target(FINAL_STATE)
                     .event(ROYAL_STRAIGHT_SLIME_EVENT)
-                    .action(pushPsButtonAction())
                     .and()
                 // かけ金入力欄が0の状態で見つかった場合、何らかの原因でポーカーを終了してしまったとみなし、リトライ・終了選択状態へ遷移。
                 .withExternal()
