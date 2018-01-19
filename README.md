@@ -176,7 +176,7 @@ PS4リモートプレイをPC上で実行することで、PS4のゲームをキ
 * 以下のコマンドでキャプチャを行います。
 
 ```bash
-$ java -jar autoplay-dq11-poker-1.0.0.RELEASE.jar --mode=CAPTURE_DEAL_CARDS_BUTTON --game-screen.location-x=0 --game-screen.location-y=45
+$ java -jar autoplay-dq11-poker-x.x.x.RELEASE.jar --mode=capture-deal-cards-button --game-screen.location-x=0 --game-screen.location-y=45
 ```
 
 * captureディレクトリにdealCardsButton.pngが生成されているので、画像を開いて確認します。
@@ -187,6 +187,9 @@ $ java -jar autoplay-dq11-poker-1.0.0.RELEASE.jar --mode=CAPTURE_DEAL_CARDS_BUTT
 #### 2.2 ロイヤルストレートスライムを構成するカードのキャプチャ
 * スライムの10, J, Q, K, A のいずれかが出るまでポーカーをプレイします。
     * カードが出るのは配られたカードでも、ダブルアップ中でも構いません。
+    * 役ができたときのカードは定期的にカードが光るアニメーションが入るため、
+      キャプチャ素材としては不向きです。
+      役が成立していない状態でカードをキャプチャするようにしてください。
 * カードが出たら以下のコマンドでキャプチャします。
     * --capture-card-number には、目的のカードが左から数えて何番目かを指定します。
         * 2を指定すれば、左から2番めのカードがキャプチャされます
@@ -198,7 +201,7 @@ $ java -jar autoplay-dq11-poker-1.0.0.RELEASE.jar --mode=CAPTURE_DEAL_CARDS_BUTT
         * スライムのA: sa
 
 ```bash
-$ java -jar autoplay-dq11-poker-1.0.0RELEASE.jar --mode=CAPTURE_CARD --game-screen.location.x=0 --game-screen.location-y=45 --capture-card-number=1 --capture-card-type=sj
+$ java -jar autoplay-dq11-poker-x.x.x.RELEASE.jar --mode=capture-card --game-screen.location.x=0 --game-screen.location-y=45 --capture-card-number=1 --capture-card-type=sj
 ```
 
 * captureディレクトリにカード種別名に対応する画像ファイルが生成されているので、
@@ -215,7 +218,7 @@ $ java -jar autoplay-dq11-poker-1.0.0RELEASE.jar --mode=CAPTURE_CARD --game-scre
 * 入力欄を0に設定します。
 * 以下のコマンドでキャプチャします。
 ```bash
-$ java -jar autoplay-dq11-poker-1.0.0.RELEASE.jar --mode=CAPTURE_BET_COIN_INPUT --game-screen.location-x=0 --game-screen.location-y=45
+$ java -jar autoplay-dq11-poker-x.x.x.RELEASE.jar --mode=capture-bet-coin-input --game-screen.location-x=0 --game-screen.location-y=45
 ```
 
 * captureディレクトリにbetCoinInput.pngが生成されているので、画像を開いて確認します。
@@ -232,7 +235,7 @@ $ java -jar autoplay-dq11-poker-1.0.0.RELEASE.jar --mode=CAPTURE_BET_COIN_INPUT 
 * 以下のコマンドを実行します。
 
 ```bash
-$ java -jar autoplay-dq11-poker-1.0.0.RELEASE.jar --mode=AUTOPLAY --game-screen.location-x=0 --game-screen.location-y=45
+$ java -jar autoplay-dq11-poker-x.x.x.RELEASE.jar --mode=autoplay --game-screen.location-x=0 --game-screen.location-y=45
 ```
 
 * 自動実行を途中でやめたい場合は、マウスカーソルをデスクトップの左上の座標(0,0)に持っていき、
@@ -261,22 +264,22 @@ $ java -jar autoplay-dq11-poker-1.0.0.RELEASE.jar --mode=AUTOPLAY --game-screen.
 "="の後の値はデフォルト値。
 application.propertiesを書き換えることでも設定可能。
 
-### mode=AUTOPLAY
+### mode=autoplay
 動作モードを指定するオプション。下記の値が指定可能。
 
 |設定可能な値              |説明                           |
 |--------------------------|-------------------------------|
-|AUTOPLAY                  |ポーカーの自動実行を行う       |
-|CAPTURE_DEAL_CARDS_BUTTON |"くばる"ボタンをキャプチャする |
-|CAPTURE_CARD              |カードをキャプチャする         |
-|CAPTURE_BET_COIN_INPUT    |かけ金入力欄をキャプチャする   |
+|autoplay                  |ポーカーの自動実行を行う       |
+|capture-deal-cards-button |"くばる"ボタンをキャプチャする |
+|capture-card              |カードをキャプチャする         |
+|capture-bet-coin-input    |かけ金入力欄をキャプチャする   |
 
 ### capture-card-number=1
---mode=CAPTURE_CARDの場合に、キャプチャするカードの番号を指定するオプション。
+--mode=capture-cardの場合に、キャプチャするカードの番号を指定するオプション。
 1から5の整数を指定します(左側から1)。
 
 ### capture-card-type=s10
---mode=CAPTURE_CARDの場合に、キャプチャするカードの種別を指定するオプション。
+--mode=capture-cardの場合に、キャプチャするカードの種別を指定するオプション。
 保存されるファイル名に使用されます。
 
 以下の値が指定可能です。
