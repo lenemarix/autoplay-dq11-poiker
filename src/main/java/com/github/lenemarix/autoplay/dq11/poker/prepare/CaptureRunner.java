@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.github.lenemarix.autoplay.dq11.poker.model.CaptureManager;
+import com.github.lenemarix.autoplay.dq11.poker.model.CaptureManager.CaptureKind;
 import com.github.lenemarix.autoplay.dq11.poker.model.CaptureRectangle;
 import com.github.lenemarix.autoplay.dq11.poker.model.Card;
 import com.github.lenemarix.autoplay.dq11.poker.util.ActivateWindowUtil;
@@ -69,6 +70,24 @@ public class CaptureRunner {
         String filePath = captureManager.getCardCaptureFilePath(cardType);
         capture(capture.getRectangle(), filePath, "card (number: " + cardNumber
                 + ", card: " + cardType + ")");
+    }
+
+    /**
+     * ダブルアップチャンスの選択ダイアログをキャプチャする。
+     */
+    public void captureDoubleupChanceDialog() {
+        // PS4リモートプレイのウィンドウを前面に出す。
+        activateWindowUtil.activate();
+
+        CaptureRectangle dialogCapture = 
+                captureManager.getCaptureRectangle(CaptureKind.DOUBLEUP_CHANCE_SELECT_DIALOG);
+        String dialogFilePath = captureManager.getCaptureFilePath(CaptureKind.DOUBLEUP_CHANCE_SELECT_DIALOG);
+        capture(dialogCapture.getRectangle(), dialogFilePath, "doubleup chance select dialog");
+
+        CaptureRectangle messageCapture = 
+                captureManager.getCaptureRectangle(CaptureKind.DOUBLEUP_CHANCE_SELECT_MESSAGE);
+        String messageFilePath = captureManager.getCaptureFilePath(CaptureKind.DOUBLEUP_CHANCE_SELECT_MESSAGE);
+        capture(messageCapture.getRectangle(), messageFilePath, "doubleup chance select message");
     }
 
     /**

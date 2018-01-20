@@ -16,7 +16,10 @@ import org.springframework.stereotype.Component;
 public class CaptureManager {
 
     public enum CaptureKind {
-        DEAL_CARDS_BUTTON_CAPTURE, BET_COIN_INPUT_CAPTURE,
+        DEAL_CARDS_BUTTON_CAPTURE, 
+        BET_COIN_INPUT_CAPTURE,
+        DOUBLEUP_CHANCE_SELECT_DIALOG,
+        DOUBLEUP_CHANCE_SELECT_MESSAGE
     }
 
     /** キャプチャする画面部品とキャプチャ範囲を対応付けたMap。 */

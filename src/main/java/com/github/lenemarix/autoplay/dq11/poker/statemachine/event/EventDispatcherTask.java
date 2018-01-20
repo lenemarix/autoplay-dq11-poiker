@@ -22,6 +22,7 @@ import org.springframework.statemachine.StateMachine;
 import com.github.lenemarix.autoplay.dq11.poker.model.CaptureManager;
 import com.github.lenemarix.autoplay.dq11.poker.model.CaptureRectangle;
 import com.github.lenemarix.autoplay.dq11.poker.model.Card;
+import com.github.lenemarix.autoplay.dq11.poker.model.CaptureManager.CaptureKind;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States;
 import com.github.lenemarix.autoplay.dq11.poker.util.CardReader;
 import com.github.lenemarix.autoplay.dq11.poker.util.ImageComparator;
@@ -112,6 +113,8 @@ public class EventDispatcherTask {
             event = Events.DEAL_CARDS_EVENT;
         } else if (shouldSendBeforeBetCoinInputEvent(screen)) {
             event = Events.BEFORE_BET_COIN_EVENT;
+        } else if (shoudSendDoubleupChanceSelectEvent(screen)) {
+            event = Events.DOUBLEUP_CHANCE_EVENT;
         } else {
             event = Events.OTHER_EVENT;
         }
@@ -196,6 +199,37 @@ public class EventDispatcherTask {
             LOGGER.error("fail to read bet coin input image file: {}", filePath, e);
         }
         return false;
+    }
+
+    private boolean shoudSendDoubleupChanceSelectEvent(BufferedImage screen) {
+        CaptureRectangle dialogCapture = 
+                captureManager.getCaptureRectangle(CaptureKind.DOUBLEUP_CHANCE_SELECT_DIALOG);
+        String dialogFilePath = captureManager.getCaptureFilePath(CaptureKind.DOUBLEUP_CHANCE_SELECT_DIALOG);
+
+        CaptureRectangle messageCapture = 
+                captureManager.getCaptureRectangle(CaptureKind.DOUBLEUP_CHANCE_SELECT_MESSAGE);
+        String messageFilePath = captureManager.getCaptureFilePath(CaptureKind.DOUBLEUP_CHANCE_SELECT_MESSAGE);
+
+        boolean result1 = false;
+        boolean result2 = false;
+        try {
+            if (imageComparator.compare(dialogFilePath, dialogCapture.getSubImage(screen))) {
+                result1 = true;
+            }
+        } catch (IOException e) {
+            // ファイル読み込みに失敗したらログを出して継続。
+            LOGGER.error("fail to read doubleup chance select dialog image file: {}", dialogFilePath, e);
+        }
+        try {
+            if (imageComparator.compare(messageFilePath, messageCapture.getSubImage(screen))) {
+                    result2 = true;
+            }
+        } catch (IOException e) {
+            // ファイル読み込みに失敗したらログを出して継続。
+            LOGGER.error("fail to read doubleup chance select message image file: {}", messageFilePath, e);
+        }
+
+        return result1 && result2;
     }
 
     public int getTimerInterval() {
