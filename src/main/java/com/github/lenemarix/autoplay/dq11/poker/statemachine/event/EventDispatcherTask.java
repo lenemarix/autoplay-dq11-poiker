@@ -34,7 +34,8 @@ import com.github.lenemarix.autoplay.dq11.poker.util.RobotUtil;
 @ConfigurationProperties(prefix = "autoplay.dq11.poker.event")
 public class EventDispatcherTask {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EventDispatcherTask.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+            EventDispatcherTask.class);
 
     @Autowired
     StateMachine<States, Events> stateMachine;
@@ -56,7 +57,7 @@ public class EventDispatcherTask {
 
     /**
      * イベント検知の周期(ms)。 application.propertiesでの補完の有効化、および、
-     * デバッグログ出力のためのフィールドであり、実際にはこのフィールドは設定には使われない。 
+     * デバッグログ出力のためのフィールドであり、実際にはこのフィールドは設定には使われない。
      * <code>@Scheduled</code>の<code>fixedDelayString</code>に指定された値が使われる。
      */
     private int timerInterval;
@@ -83,7 +84,8 @@ public class EventDispatcherTask {
          * 役が成立した際にカードが光るアニメーションが入るため、1回のキャプチャだとカード認識に失敗する可能性がある。
          * そのため、キャプチャを連続取得し、それぞれのキャプチャでカードの読み取りを行い、補正を行う。
          */
-        List<BufferedImage> captureList = robotUtil.captureGameScreenBurst(captureBurstCount, captureBurstInterval);
+        List<BufferedImage> captureList = robotUtil.captureGameScreenBurst(
+                captureBurstCount, captureBurstInterval);
         LocalDateTime captureDateTime = LocalDateTime.now();
 
         // それぞれのキャプチャでカード読み取りを実施。
@@ -139,7 +141,8 @@ public class EventDispatcherTask {
      * @return イベントを送信するべきならtrue。それ以外はfalse。
      */
     private boolean shouldSendDealCardsEvent(List<Card> cards, BufferedImage screen) {
-        CaptureRectangle captureRect = captureManager.getCaptureRectangle(DEAL_CARDS_BUTTON_CAPTURE);
+        CaptureRectangle captureRect = captureManager.getCaptureRectangle(
+                DEAL_CARDS_BUTTON_CAPTURE);
         String filePath = captureManager.getCaptureFilePath(DEAL_CARDS_BUTTON_CAPTURE);
         try {
             // "くばる"ボタンの画像とキャプチャが一致したらイベント送信。
@@ -180,7 +183,8 @@ public class EventDispatcherTask {
      * @return イベントを送信するべきならtrue。それ以外はfalse。
      */
     private boolean shouldSendBeforeBetCoinInputEvent(BufferedImage screen) {
-        CaptureRectangle captureRect = captureManager.getCaptureRectangle(BET_COIN_INPUT_CAPTURE);
+        CaptureRectangle captureRect = captureManager.getCaptureRectangle(
+                BET_COIN_INPUT_CAPTURE);
         String filePath = captureManager.getCaptureFilePath(BET_COIN_INPUT_CAPTURE);
         try {
             // かけ金入力欄の画像とキャプチャが一致したらイベント送信。

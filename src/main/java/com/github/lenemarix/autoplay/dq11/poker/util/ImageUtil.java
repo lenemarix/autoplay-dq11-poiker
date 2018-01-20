@@ -15,8 +15,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class ImageUtil {
 
-    public void imageToFile(BufferedImage image, Rectangle rectangle, String filepath) throws IOException {
-        BufferedImage subImage = image.getSubimage(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+    public void imageToFile(BufferedImage image, Rectangle rectangle, String filepath)
+            throws IOException {
+        BufferedImage subImage = image.getSubimage(rectangle.x, rectangle.y,
+                rectangle.width, rectangle.height);
         imageToFile(subImage, filepath);
     }
 

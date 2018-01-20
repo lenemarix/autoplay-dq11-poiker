@@ -44,7 +44,7 @@ public class ImageComparator {
      * @param read2 比較対象となる画像イメージ。
      * @return 一致していればtrue。それ以外はfalse。
      */
-     public boolean compare(BufferedImage read1, BufferedImage read2) {
+    public boolean compare(BufferedImage read1, BufferedImage read2) {
         int w1 = read1.getWidth();
         int h1 = read1.getHeight();
 
@@ -83,7 +83,8 @@ public class ImageComparator {
             }
         }
 
-        LOGGER.debug("correctCount = {} / warnningCount = {} / irregularCount = {} / rgbSum = {}", 
+        LOGGER.debug(
+                "correctCount = {} / warnningCount = {} / irregularCount = {} / rgbSum = {}",
                 correctCount, warnningCount, irregularCount, rgbSum);
 
         return irregularCount == 0;

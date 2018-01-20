@@ -33,12 +33,13 @@ public class BetCoinAction extends AbstractAutoplayAction {
 
     @Override
     public void doExecute(StateContext<States, Events> context) {
-        IntStream.range(0, numberOfTimesToPushUpArrow).forEach(i -> robotUtil.upKeyPress());
+        IntStream.range(0, numberOfTimesToPushUpArrow).forEach(i -> robotUtil
+                .upKeyPress());
         robotUtil.enterKeyPress();
-        
+
         count.incrementAndGet();
     }
-    
+
     @PreDestroy
     public void loggingCount() {
         LOGGER.info("BetCoinAction count: {}", count.get());

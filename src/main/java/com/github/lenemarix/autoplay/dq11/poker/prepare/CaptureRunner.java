@@ -67,7 +67,8 @@ public class CaptureRunner {
     public void captureCard(int cardNumber, Card cardType) {
         CaptureRectangle capture = captureManager.getCardCapture(cardNumber);
         String filePath = captureManager.getCardCaptureFilePath(cardType);
-        capture(capture.getRectangle(), filePath, "card (number: " + cardNumber + ", card: " + cardType + ")");
+        capture(capture.getRectangle(), filePath, "card (number: " + cardNumber
+                + ", card: " + cardType + ")");
     }
 
     /**

@@ -38,7 +38,7 @@ public class AutoplayConfig implements SchedulingConfigurer {
     private static final Logger LOGGER = LoggerFactory.getLogger(AutoplayConfig.class);
 
     private int applicationExitCheckInterval;
-    
+
     private LocalDateTime startTime = LocalDateTime.now();
 
     @Autowired
@@ -69,8 +69,7 @@ public class AutoplayConfig implements SchedulingConfigurer {
     }
 
     /**
-     * 定期的にアプリケーションの実行終了条件を判定し、条件を満たしたらアプリケーションを終了する。
-     * 以下の場合に終了する。
+     * 定期的にアプリケーションの実行終了条件を判定し、条件を満たしたらアプリケーションを終了する。 以下の場合に終了する。
      * <ul>
      * <li>StateMachineが終了している場合。</li>
      * <li>マウスポインタが(0,0)の位置にある場合(ユーザによる強制終了)。</li>
@@ -86,8 +85,7 @@ public class AutoplayConfig implements SchedulingConfigurer {
         }
 
         // Statemachineが終了していたらコンテキストをクローズ。
-        if (stateMachine.getState() != null
-                && stateMachine.isComplete()) {
+        if (stateMachine.getState() != null && stateMachine.isComplete()) {
             LOGGER.info("statemachine is complete. start shutdown.");
             context.close();
             loggingDurationTime();
@@ -100,10 +98,10 @@ public class AutoplayConfig implements SchedulingConfigurer {
         long minutes = duration.toMinutes() - (hours * 60);
         long seconds = duration.getSeconds() - (hours * 60 * 60) - (minutes * 60);
 
-        LOGGER.info("Playing poker duration: {}h:{}m:{}s ({})", hours, minutes, seconds, duration.toString());
+        LOGGER.info("Playing poker duration: {}h:{}m:{}s ({})", hours, minutes, seconds,
+                duration.toString());
     }
 
-    
     public int getApplicationExitCheckInterval() {
         return applicationExitCheckInterval;
     }

@@ -35,10 +35,8 @@ public class CardReader {
     /**
      * 指定されたカードが保持すべきカードかを判定する。
      * 
-     * @param cardNumber
-     *            カード番号(左側から1)。
-     * @param screen
-     *            ゲーム画像のスクリーンショット画像。
+     * @param cardNumber カード番号(左側から1)。
+     * @param screen ゲーム画像のスクリーンショット画像。
      * @return 保持すべきカードならtrue、それ以外はfalse。
      */
     public boolean isHoldCard(int cardNumber, BufferedImage screen) {
@@ -48,19 +46,18 @@ public class CardReader {
     /**
      * カード5枚の種類を読み取る。
      * 
-     * @param screen
-     *            ゲーム画面のスクリーンショット画像。
+     * @param screen ゲーム画面のスクリーンショット画像。
      * @return カード5枚の種類のリスト。
      */
     public List<Card> readAllCards(BufferedImage screen) {
-        return IntStream.rangeClosed(1, 5).mapToObj(i -> readCard(i, screen)).collect(Collectors.toList());
+        return IntStream.rangeClosed(1, 5).mapToObj(i -> readCard(i, screen)).collect(
+                Collectors.toList());
     }
 
     /**
      * 指定されたカードの種類を読み取る。
      * 
-     * @param cardNumber
-     *            カード番号(左側から1)。
+     * @param cardNumber カード番号(左側から1)。
      * @param screen ゲーム画面のスクリーンショット画像。
      * @return カードの種類。
      */
@@ -81,19 +78,19 @@ public class CardReader {
         } else if (recognizedCards.size() == 1) {
             return recognizedCards.get(0);
         } else {
-            String recognizedCardString = recognizedCards.stream().map(c -> c.name()).collect(Collectors.joining(", "));
+            String recognizedCardString = recognizedCards.stream().map(c -> c.name())
+                    .collect(Collectors.joining(", "));
             throw new IllegalStateException(
-                    "read card error!! cardNumber: " + cardNumber + ", recognized card: " + recognizedCardString);
+                    "read card error!! cardNumber: " + cardNumber + ", recognized card: "
+                            + recognizedCardString);
         }
     }
 
     /**
      * 指定されたカードの画像キャプチャが、保存されているカードのキャプチャと一致するか判定する。
      * 
-     * @param capturedCardImage
-     *            キャプチャしたカードの画像イメージ。
-     * @param cardFile
-     *            比較対象となるカードの画像のファイルパス。
+     * @param capturedCardImage キャプチャしたカードの画像イメージ。
+     * @param cardFile 比較対象となるカードの画像のファイルパス。
      * @return 一致していればtrue、それ以外はfalse。
      */
     private boolean compareCard(BufferedImage capturedCardImage, String cardFile) {
@@ -108,8 +105,7 @@ public class CardReader {
     }
 
     /**
-     * 2つのカード読み取り結果のリストをマージする。
-     * カード読み取り結果に違いがある場合は、以下の優先順位でマージする。
+     * 2つのカード読み取り結果のリストをマージする。 カード読み取り結果に違いがある場合は、以下の優先順位でマージする。
      * <ol>
      * <li>ロイヤルストレートスライムを構成するカードを優先する。</li>
      * <li>list2の要素を優先する。</li>
@@ -121,8 +117,10 @@ public class CardReader {
      */
     public List<Card> mergeCardList(List<Card> list1, List<Card> list2) {
         if (list1.size() != list2.size()) {
-            throw new IllegalArgumentException("the size of each list is different: list1: " + list1.size() + ", list2: "
-                    + list2.size());
+            throw new IllegalArgumentException(
+                    "the size of each list is different: list1: " + list1.size()
+                            + ", list2: "
+                            + list2.size());
         }
         return IntStream.range(0, 5)
                 .mapToObj(i -> mergeCard(list1.get(i), list2.get(i)))
@@ -130,8 +128,7 @@ public class CardReader {
     }
 
     /**
-     * 2枚のカード読み取り結果をマージする。
-     * カード読み取り結果に違いがある場合は、以下の優先順位でマージする。
+     * 2枚のカード読み取り結果をマージする。 カード読み取り結果に違いがある場合は、以下の優先順位でマージする。
      * <ol>
      * <li>ロイヤルストレートスライムを構成するカードを優先する。</li>
      * <li>card2の要素を優先する。</li>
@@ -146,7 +143,8 @@ public class CardReader {
             return card2;
         }
         Card result = card2.isHoldCard() ? card2 : card1;
-        LOGGER.info("detect read card difference, card1: {}, card2: {}, result: {}", card1, card2, result);
+        LOGGER.info("detect read card difference, card1: {}, card2: {}, result: {}",
+                card1, card2, result);
         return result;
     }
 }

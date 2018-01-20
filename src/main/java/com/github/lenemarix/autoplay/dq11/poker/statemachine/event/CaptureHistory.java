@@ -43,7 +43,8 @@ public class CaptureHistory {
 
     private LinkedList<CaptureHistoryElement> captureList = new LinkedList<>();
 
-    public synchronized void add(BufferedImage image, String eventId, Events dispatchedEvent,
+    public synchronized void add(BufferedImage image, String eventId,
+            Events dispatchedEvent,
             LocalDateTime captureDateTime) {
         if (max <= 0) {
             // maxが0以下ならキャプチャを保存しない
@@ -52,7 +53,8 @@ public class CaptureHistory {
         if (captureList.size() > 1 && captureList.size() >= max) {
             captureList.removeFirst();
         }
-        CaptureHistoryElement element = new CaptureHistoryElement(image, eventId, dispatchedEvent, captureDateTime);
+        CaptureHistoryElement element = new CaptureHistoryElement(image, eventId,
+                dispatchedEvent, captureDateTime);
         captureList.add(element);
     }
 
@@ -73,7 +75,9 @@ public class CaptureHistory {
             String filePath = createCaptureFilePath(e);
             try {
                 imageUtil.imageToFile(e.getImage(), filePath);
-                LOGGER.info("save capture file. date: {}, eventId: {}, event: {}, file: {}", e.getCaptureDateTime(),
+                LOGGER.info(
+                        "save capture file. date: {}, eventId: {}, event: {}, file: {}", e
+                                .getCaptureDateTime(),
                         e.getEventId(), e.getDispatchedEvent(), filePath);
             } catch (IOException e1) {
                 LOGGER.error("fail to save capture file: {}", filePath, e1);
@@ -84,8 +88,7 @@ public class CaptureHistory {
     /**
      * すでに存在するキャプチャ履歴ファイルを削除する。 削除するのは数字が14桁 + ".png" のファイル。
      * 
-     * @throws IOException
-     *             ファイルの削除に失敗した場合。
+     * @throws IOException ファイルの削除に失敗した場合。
      */
     private void deleteOldFile() throws IOException {
         Path dirPath = Paths.get(saveDirectory);
@@ -104,7 +107,8 @@ public class CaptureHistory {
 
     private String createCaptureFilePath(CaptureHistoryElement e) {
         String filePath = saveDirectory + File.separator
-                + e.getCaptureDateTime().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".png";
+                + e.getCaptureDateTime().format(DateTimeFormatter.ofPattern(
+                        "yyyyMMddHHmmss")) + ".png";
         return filePath;
     }
 

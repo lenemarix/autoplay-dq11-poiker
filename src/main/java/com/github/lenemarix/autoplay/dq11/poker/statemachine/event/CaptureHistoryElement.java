@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
  */
 public class CaptureHistoryElement {
 
-    public CaptureHistoryElement(BufferedImage image, String eventId, Events dispatchedEvent,
+    public CaptureHistoryElement(BufferedImage image, String eventId,
+            Events dispatchedEvent,
             LocalDateTime captureDateTime) {
         this.image = image;
         this.eventId = eventId;

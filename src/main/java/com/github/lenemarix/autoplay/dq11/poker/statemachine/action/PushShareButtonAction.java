@@ -17,7 +17,8 @@ import com.github.lenemarix.autoplay.dq11.poker.util.RobotUtil;
 @ConfigurationProperties(prefix = "autoplay.dq11.poker.push-share-button-action")
 public class PushShareButtonAction extends AbstractAutoplayAction {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PushShareButtonAction.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+            PushShareButtonAction.class);
 
     /** Shareボタンのゲーム画面内X座標。 */
     private int shareButtonX;

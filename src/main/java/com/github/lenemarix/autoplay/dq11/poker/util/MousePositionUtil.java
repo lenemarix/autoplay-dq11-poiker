@@ -4,8 +4,7 @@ import java.awt.MouseInfo;
 import java.awt.PointerInfo;
 
 /**
- * マウスポインタの位置を定期的に標準出力に出力する。
- * 開発中の補助用。
+ * マウスポインタの位置を定期的に標準出力に出力する。 開発中の補助用。
  */
 public class MousePositionUtil {
 

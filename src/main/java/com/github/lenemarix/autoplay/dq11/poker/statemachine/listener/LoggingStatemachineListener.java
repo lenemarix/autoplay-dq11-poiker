@@ -16,8 +16,9 @@ import com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States;
 @WithStateMachine
 public class LoggingStatemachineListener {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingStatemachineListener.class);
-    
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+            LoggingStatemachineListener.class);
+
     @OnTransition
     public void onTransition(StateContext<States, Events> stateContext) {
         String eventId = stateContext.getMessageHeaders().get("eventId", String.class);
@@ -41,7 +42,8 @@ public class LoggingStatemachineListener {
             transitionKind = stateContext.getTransition().getKind().toString();
         }
 
-        LOGGER.info("[Transition] EventId: {}, Event: {}, from: {}, to: {}, transitionKind: {}",
+        LOGGER.info(
+                "[Transition] EventId: {}, Event: {}, from: {}, to: {}, transitionKind: {}",
                 eventId, eventName, from, to, transitionKind);
     }
 }

@@ -137,12 +137,11 @@ public class RobotUtil {
      * マウスを左クリックする。
      */
     public void mouseLeftPress() {
-       mousePress(InputEvent.BUTTON1_DOWN_MASK);
+        mousePress(InputEvent.BUTTON1_DOWN_MASK);
     }
 
     /**
-     * 受け取ったコマンドに応じたキーを順番に実行する。
-     * 有効な文字は以下の通り
+     * 受け取ったコマンドに応じたキーを順番に実行する。 有効な文字は以下の通り
      * <ul>
      * <li>R: 右キー</li>
      * <li>D: 下キー</li>
@@ -164,7 +163,7 @@ public class RobotUtil {
                 enterKeyPress();
                 break;
             default:
-                throw new IllegalArgumentException("Illegal command: " + (char)c);
+                throw new IllegalArgumentException("Illegal command: " + (char) c);
             }
         });
     }

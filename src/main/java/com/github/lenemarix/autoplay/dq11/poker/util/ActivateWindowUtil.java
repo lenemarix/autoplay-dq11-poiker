@@ -1,6 +1,5 @@
 package com.github.lenemarix.autoplay.dq11.poker.util;
 
-import java.awt.event.InputEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,12 +19,12 @@ public interface ActivateWindowUtil {
     void activate();
 
     /**
-     * PS4リモートプレイのウィンドウを前面に出す。 
-     * プロパティで指定された座標にウィンドウが存在し、クリック可能な状態となっていること。
+     * PS4リモートプレイのウィンドウを前面に出す。 プロパティで指定された座標にウィンドウが存在し、クリック可能な状態となっていること。
      */
     @ConfigurationProperties(prefix = "autoplay.dq11.poker.mouse-click-activate-window")
     public static class MouseClickActivateWindowUtil implements ActivateWindowUtil {
-        private static final Logger LOGGER = LoggerFactory.getLogger(MouseClickActivateWindowUtil.class);
+        private static final Logger LOGGER = LoggerFactory.getLogger(
+                MouseClickActivateWindowUtil.class);
 
         /** PS4リモートプレイのウィンドウを前面に出すためにクリックする座標。 */
         private int mouseClickX;
@@ -33,7 +32,7 @@ public interface ActivateWindowUtil {
 
         @Autowired
         RobotUtil robotUtil;
- 
+
         @Autowired
         GameScreen gameScreen;
 
@@ -68,7 +67,8 @@ public interface ActivateWindowUtil {
      */
     public static class AppleScriptActivateWindowUtil implements ActivateWindowUtil {
 
-        private static final Logger LOGGER = LoggerFactory.getLogger(AppleScriptActivateWindowUtil.class);
+        private static final Logger LOGGER = LoggerFactory.getLogger(
+                AppleScriptActivateWindowUtil.class);
 
         @Autowired
         RobotUtil robotUtil;
@@ -78,7 +78,8 @@ public interface ActivateWindowUtil {
             ProcessBuilder builder = new ProcessBuilder("osascript", "-e",
                     "tell application \"RemotePlay\" to activate");
 
-            try (InputStreamReader isr = new InputStreamReader(builder.start().getErrorStream());
+            try (InputStreamReader isr = new InputStreamReader(builder.start()
+                    .getErrorStream());
                     BufferedReader bufferedReader = new BufferedReader(isr)) {
                 String scriptError;
                 while ((scriptError = bufferedReader.readLine()) != null) {

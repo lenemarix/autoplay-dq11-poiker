@@ -13,7 +13,8 @@ import com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States;
  */
 public abstract class AbstractAutoplayAction implements Action<States, Events> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAutoplayAction.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+            AbstractAutoplayAction.class);
 
     @Override
     public void execute(StateContext<States, Events> context) {

@@ -18,7 +18,8 @@ import com.github.lenemarix.autoplay.dq11.poker.util.ActivateWindowUtil.MouseCli
 @ConfigurationProperties(prefix = "autoplay.dq11.poker.window")
 public class HandleWindowConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(HandleWindowConfig.class);
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(HandleWindowConfig.class);
 
     /** PS4リモートプレイのウィンドウを前面に出す動作モード。 */
     private ActivateWindowMode activateWindowMode;
@@ -49,15 +50,18 @@ public class HandleWindowConfig {
         case AUTO:
             String osname = System.getProperty("os.name").toLowerCase();
             if (osname.startsWith("mac")) {
-                LOGGER.info("activate window mode (auto): {}", ActivateWindowMode.APPLE_SCRIPT);
+                LOGGER.info("activate window mode (auto): {}",
+                        ActivateWindowMode.APPLE_SCRIPT);
                 util = new AppleScriptActivateWindowUtil();
             } else {
-                LOGGER.info("activate window mode (auto): {}", ActivateWindowMode.MOUSE_CLICK);
+                LOGGER.info("activate window mode (auto): {}",
+                        ActivateWindowMode.MOUSE_CLICK);
                 util = new MouseClickActivateWindowUtil();
             }
             break;
         default:
-            throw new IllegalStateException("invalid activate window mode: " + activateWindowMode);
+            throw new IllegalStateException(
+                    "invalid activate window mode: " + activateWindowMode);
         }
 
         return util;

@@ -8,12 +8,11 @@ import com.github.lenemarix.autoplay.dq11.poker.statemachine.event.Events;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States;
 
 /**
- * ポーカーをリトライするか判定するガード条件。
- * 予期せぬキー動作により、ポーカーを続けるかどうかのダイアログでいいえが選択されてしまい、
+ * ポーカーをリトライするか判定するガード条件。 予期せぬキー動作により、ポーカーを続けるかどうかのダイアログでいいえが選択されてしまい、
  * ポーカーが終了してしまった場合に、ポーカー自体をリトライするかどうか判定する。
  */
 @ConfigurationProperties(prefix = "autoplay.dq11.poker.retry-on-unexpected-guard")
-public class RetryOnUnexpectedStateGuard implements Guard<States, Events>{
+public class RetryOnUnexpectedStateGuard implements Guard<States, Events> {
 
     private boolean retry;
 
@@ -30,4 +29,4 @@ public class RetryOnUnexpectedStateGuard implements Guard<States, Events>{
         this.retry = retry;
     }
 
- }
+}

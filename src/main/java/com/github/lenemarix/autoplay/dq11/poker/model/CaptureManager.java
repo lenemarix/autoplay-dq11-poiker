@@ -16,22 +16,21 @@ import org.springframework.stereotype.Component;
 public class CaptureManager {
 
     public enum CaptureKind {
-        DEAL_CARDS_BUTTON_CAPTURE, 
-        BET_COIN_INPUT_CAPTURE,
+        DEAL_CARDS_BUTTON_CAPTURE, BET_COIN_INPUT_CAPTURE,
     }
-    
+
     /** キャプチャする画面部品とキャプチャ範囲を対応付けたMap。 */
     private Map<CaptureKind, CaptureRectangle> rectangleMap = new HashMap<>();
 
     /** 画面部品とそのキャプチャ画像のファイルパスを対応付けたMap。 */
     private Map<CaptureKind, String> filePathMap = new HashMap<>();
-    
+
     /** カードのキャプチャ範囲を格納したリスト。 */
     private List<CaptureRectangle> cardRectangleList = new ArrayList<>();
-    
+
     /** カードとそのキャプチャ画像のファイルパスを対応付けたMap。 */
     private Map<Card, String> cardFilePathMap = new HashMap<>();
-  
+
     /**
      * 画面部品のキャプチャ範囲を返す。
      * 
@@ -41,6 +40,7 @@ public class CaptureManager {
     public CaptureRectangle getCaptureRectangle(CaptureKind kind) {
         return rectangleMap.get(kind);
     }
+
     /**
      * 画面部品のキャプチャファイルのパスを返す。
      * 
@@ -50,6 +50,7 @@ public class CaptureManager {
     public String getCaptureFilePath(CaptureKind kind) {
         return filePathMap.get(kind);
     }
+
     /**
      * カードのキャプチャ範囲を返す。
      * 
@@ -59,7 +60,7 @@ public class CaptureManager {
     public CaptureRectangle getCardCapture(int num) {
         return cardRectangleList.get(num - 1);
     }
-    
+
     /**
      * カードのキャプチャファイルのパスを返す。
      * 
@@ -69,28 +70,35 @@ public class CaptureManager {
     public String getCardCaptureFilePath(Card card) {
         return cardFilePathMap.get(card);
     }
-    
+
     public Map<CaptureKind, CaptureRectangle> getRectangleMap() {
         return rectangleMap;
     }
+
     public void setRectangleMap(Map<CaptureKind, CaptureRectangle> rectangleMap) {
         this.rectangleMap = rectangleMap;
     }
+
     public Map<CaptureKind, String> getFilePathMap() {
         return filePathMap;
     }
+
     public void setFilePathMap(Map<CaptureKind, String> filePathMap) {
         this.filePathMap = filePathMap;
     }
+
     public List<CaptureRectangle> getCardRectangleList() {
         return cardRectangleList;
     }
+
     public void setCardRectangleList(List<CaptureRectangle> cardRectangleList) {
         this.cardRectangleList = cardRectangleList;
     }
+
     public Map<Card, String> getCardFilePathMap() {
         return cardFilePathMap;
     }
+
     public void setCardFilePathMap(Map<Card, String> cardFilePathMap) {
         this.cardFilePathMap = cardFilePathMap;
     }

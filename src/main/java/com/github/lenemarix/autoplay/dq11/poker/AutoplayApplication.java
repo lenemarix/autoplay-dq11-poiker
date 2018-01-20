@@ -18,13 +18,13 @@ import com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States;
 
 /**
  * DQ11のポーカーを自動実行し、ロイヤルストレートスライムが出るまで続ける。
- * 準備として"くばる"ボタンおよびロイヤルストレートスライムを構成するカードの画像キャプチャを取る必要がある。
  */
 @SpringBootApplication
 @ConfigurationProperties(prefix = "")
 public class AutoplayApplication implements ApplicationRunner {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AutoplayApplication.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+            AutoplayApplication.class);
 
     @Autowired
     CaptureRunner captureRunner;
@@ -34,9 +34,9 @@ public class AutoplayApplication implements ApplicationRunner {
 
     /** アプリケーションの動作モード。 */
     private Mode mode;
-    /** CAPTURE_CARDモードで、何番目のカードをキャプチャするか(左側から1番目)。 */
+    /** capture-cardモードで、何番目のカードをキャプチャするか(左側から1番目)。 */
     private int captureCardNumber;
-    /** CAPTURE_CARDモードで、キャプチャしたカードの種別は何か。 */
+    /** capture-cardモードで、キャプチャしたカードの種別は何か。 */
     private Card captureCardType;
 
     public static void main(String[] args) {

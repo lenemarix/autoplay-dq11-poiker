@@ -22,7 +22,8 @@ import com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States;
 @ConfigurationProperties(prefix = "autoplay.dq11.poker.retry-push-deal-button-guard")
 public class RetryPushDealButtonGuard implements Guard<States, Events> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RetryPushDealButtonGuard.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+            RetryPushDealButtonGuard.class);
 
     private static final String DEALT_CARDS_STATE_START_DATE = "DEALT_CARDS_STATE.startDate";
 
@@ -31,7 +32,8 @@ public class RetryPushDealButtonGuard implements Guard<States, Events> {
 
     @Override
     public boolean evaluate(StateContext<States, Events> context) {
-        LocalDateTime dealCardsStateStartDate = context.getExtendedState().get(DEALT_CARDS_STATE_START_DATE,
+        LocalDateTime dealCardsStateStartDate = context.getExtendedState().get(
+                DEALT_CARDS_STATE_START_DATE,
                 LocalDateTime.class);
 
         if (dealCardsStateStartDate == null) {
@@ -43,10 +45,13 @@ public class RetryPushDealButtonGuard implements Guard<States, Events> {
         boolean result = false;
 
         if (duration.toMillis() > waitPeriod) {
-            context.getExtendedState().getVariables().put(DEALT_CARDS_STATE_START_DATE, now);
+            context.getExtendedState().getVariables().put(DEALT_CARDS_STATE_START_DATE,
+                    now);
             result = true;
         }
-        LOGGER.info("[Guard     ] RetryPushDealButtonGuard: {}, now wait(ms): {} (until {}ms)", result,
+        LOGGER.info(
+                "[Guard     ] RetryPushDealButtonGuard: {}, now wait(ms): {} (until {}ms)",
+                result,
                 duration.toMillis(), waitPeriod);
         return result;
     }
@@ -62,9 +67,11 @@ public class RetryPushDealButtonGuard implements Guard<States, Events> {
         LocalDateTime dealtCardsStateStartDate = null;
         if (States.DEALT_CARDS_STATE.equals(stateContext.getTarget().getId())) {
             dealtCardsStateStartDate = LocalDateTime.now();
-            stateContext.getExtendedState().getVariables().put(DEALT_CARDS_STATE_START_DATE, dealtCardsStateStartDate);
+            stateContext.getExtendedState().getVariables().put(
+                    DEALT_CARDS_STATE_START_DATE, dealtCardsStateStartDate);
         } else {
-            stateContext.getExtendedState().getVariables().remove(DEALT_CARDS_STATE_START_DATE);
+            stateContext.getExtendedState().getVariables().remove(
+                    DEALT_CARDS_STATE_START_DATE);
         }
         LOGGER.debug("save dealt cards state start Date: {}", dealtCardsStateStartDate);
     }

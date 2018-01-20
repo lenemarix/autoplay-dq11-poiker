@@ -28,9 +28,9 @@ public class CaptureRectangle {
      * @return キャプチャ範囲で切り取ったイメージ。
      */
     public BufferedImage getSubImage(BufferedImage image) {
-         return image.getSubimage(x, y, width, height);
+        return image.getSubimage(x, y, width, height);
     }
-    
+
     public int getX() {
         return x;
     }

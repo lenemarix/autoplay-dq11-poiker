@@ -18,7 +18,8 @@ import com.github.lenemarix.autoplay.dq11.poker.util.RobotUtil;
  */
 public class PushDealButtonAction extends AbstractAutoplayAction {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PushDealButtonAction.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+            PushDealButtonAction.class);
 
     private AtomicInteger count = new AtomicInteger(0);
 
@@ -31,7 +32,7 @@ public class PushDealButtonAction extends AbstractAutoplayAction {
         robotUtil.downKeyPress();
         // "くばる"ボタンを押下
         robotUtil.enterKeyPress();
-        
+
         count.incrementAndGet();
     }
 
