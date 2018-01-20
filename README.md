@@ -122,6 +122,7 @@ PS4リモートプレイをPC上で実行することで、PS4のゲームをキ
         * スライムのQueen
         * スライムのKing
         * スライムのA
+        * ジョーカー
     * かけ金入力欄(入力値は0)のキャプチャ。
 3. 自動操作の実行
 
@@ -185,7 +186,7 @@ $ java -jar autoplay-dq11-poker-x.x.x.RELEASE.jar --mode=capture-deal-cards-butt
       オプション値を調整します
 
 #### 2.2 ロイヤルストレートスライムを構成するカードのキャプチャ
-* スライムの10, J, Q, K, A のいずれかが出るまでポーカーをプレイします。
+* スライムの10, J, Q, K, A, ジョーカーのいずれかが出るまでポーカーをプレイします。
     * カードが出るのは配られたカードでも、ダブルアップ中でも構いません。
     * 役ができたときのカードは定期的にカードが光るアニメーションが入るため、
       キャプチャ素材としては不向きです。
@@ -199,6 +200,7 @@ $ java -jar autoplay-dq11-poker-x.x.x.RELEASE.jar --mode=capture-deal-cards-butt
         * スライムのQ: sq
         * スライムのK: sk
         * スライムのA: sa
+        * ジョーカー: jo
 
 ```bash
 $ java -jar autoplay-dq11-poker-x.x.x.RELEASE.jar --mode=capture-card --game-screen.location.x=0 --game-screen.location-y=45 --capture-card-number=1 --capture-card-type=sj
@@ -315,6 +317,9 @@ PS4リモートプレイのウィンドウ内のゲーム画面の幅と高さ�
 
 ### autoplay.dq11.poker.capture.card-file-path-map.sa=capture/SA.png
 スライムのAのカードのキャプチャ画像のファイルパス。
+
+### autoplay.dq11.poker.capture.card-file-path-map.jo=capture/JO.png
+ジョーカーのカードのキャプチャ画像のファイルパス。
 
 ### autoplay.dq11.poker.capture.card-rectangle-list[0].x=85
 配られた5枚のカードのうち、左から1枚目のカードのゲーム画面内X座標。
