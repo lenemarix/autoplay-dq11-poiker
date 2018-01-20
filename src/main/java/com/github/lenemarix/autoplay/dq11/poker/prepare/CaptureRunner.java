@@ -42,7 +42,7 @@ public class CaptureRunner {
     /**
      * かけ金入力欄のキャプチャを行う。かけ金入力欄が表示され、0が設定されていること。
      */
-    public void captureBetCoinInputCapture() {
+    public void captureBetCoinInput() {
         CaptureRectangle capture = captureManager.getCaptureRectangle(BET_COIN_INPUT_CAPTURE);
         String filePath = captureManager.getCaptureFilePath(BET_COIN_INPUT_CAPTURE);
         capture(capture.getRectangle(), filePath, "bet coin input");

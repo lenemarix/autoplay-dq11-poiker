@@ -58,7 +58,7 @@ public class AutoplayApplication implements ApplicationRunner {
             captureRunner.captureDealCardsButton();
             break;
         case CAPTURE_BET_COIN_INPUT:
-            captureRunner.captureBetCoinInputCapture();
+            captureRunner.captureBetCoinInput();
             break;
         default:
             // do nothing in some particular cases (e.g. for test)
