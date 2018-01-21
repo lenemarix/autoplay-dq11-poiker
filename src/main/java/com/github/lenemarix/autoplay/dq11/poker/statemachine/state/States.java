@@ -11,6 +11,9 @@ public enum States {
     /** カード配布済み状態("くばる"ボタンが表示されている)。 */
     DEALT_CARDS_STATE,
 
+    /** ダブルアップチャンス選択中状態。 */
+    DOUBLEUP_CHANCE_SELECT_STATE,
+
     /** 予期せぬ状態になったとき、リトライかアプリケーション終了を選択する状態。 */
     RETRY_OR_END_STATE,
 
