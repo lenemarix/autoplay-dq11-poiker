@@ -13,6 +13,9 @@
       <transition xmi:type="uml:Transition" xmi:id="_k_uT4PrMEeeUSt9YWzBCGA" source="_lOl9sPrJEeeUSt9YWzBCGA" target="_0itoAPrJEeeUSt9YWzBCGA">
         <effect xmi:type="uml:Activity" xmi:id="_oN_msPrMEeeUSt9YWzBCGA" name="PS4リモートプレイのウィンドウを前面に出す"/>
       </transition>
+      <transition xmi:type="uml:Transition" xmi:id="_9XN38P5VEeeq3oqpXMNXAQ" name="DOUBLEUP_CHANCE_EVENT" source="_0itoAPrJEeeUSt9YWzBCGA" target="_0itoAPrJEeeUSt9YWzBCGA">
+        <effect xmi:type="uml:Activity" xmi:id="_KeB9MP5WEeeq3oqpXMNXAQ" name="挑戦かキャンセルを選択"/>
+      </transition>
       <subvertex xmi:type="uml:Pseudostate" xmi:id="_lOl9sPrJEeeUSt9YWzBCGA" name=""/>
       <subvertex xmi:type="uml:State" xmi:id="_0itoAPrJEeeUSt9YWzBCGA" name="PLAYING_POKER_STATE">
         <region xmi:type="uml:Region" xmi:id="_5ZE6AvrJEeeUSt9YWzBCGA" name="Region1">

@@ -16,7 +16,7 @@ public enum Events {
 
     /** ダブルアップチャンスイベント。 */
     DOUBLEUP_CHANCE_EVENT,
-    
+
     /** その他イベント。 */
     OTHER_EVENT,
 

@@ -76,12 +76,13 @@ PS4リモートプレイをPC上で実行することで、PS4のゲームをキ
 
 イベントの一覧は下記のとおりです。Eventsのenumで定義されています。
 
-|イベント                   |説明                                                |
-|---------------------------|----------------------------------------------------|
-|DEAL_CARDS_EVENT           |"くばる"ボタンを検知した際に送信される              |
-|ROYAL_STRAIGHT_SLIME_EVENT |ロイヤルストレートスライムを検出した際に送信される  |
-|BEFORE_BET_COIN_EVENT      |かけ金入力欄を検出した際に送信される                |
-|OTHER_EVENT                |上記のイベントに合致しなかった場合に送信される      |
+|イベント                   |説明                                                   |
+|---------------------------|-------------------------------------------------------|
+|DEAL_CARDS_EVENT           |"くばる"ボタンを検知した際に送信される                 |
+|ROYAL_STRAIGHT_SLIME_EVENT |ロイヤルストレートスライムを検出した際に送信される     |
+|BEFORE_BET_COIN_EVENT      |かけ金入力欄を検出した際に送信される                   |
+|DOUBLEUP_CHANCE_EVENT      |ダブルアップチャンスの選択ダイアログ検出時に送信される |
+|OTHER_EVENT                |上記のイベントに合致しなかった場合に送信される         |
 
 イベントを受信した際の状態遷移と実行されるActionは以下のとおりです。
 (各状態とイベントでは、末尾の"_STATE", "_EVENT"を省略)
@@ -92,12 +93,15 @@ PS4リモートプレイをPC上で実行することで、PS4のゲームをキ
 |OTHER        |DEAL_CARDS     |DEALT_CARDS  |残すカードを選択して"くばる"ボタンを押下    |
 |OTHER        |OTHER          |OTHER        |Enterキーを押す                             |
 |DEALT_CARDS  |OTHER          |OTHER        |Enterキーを押す                             |
+|PLAYING_POKER|DOUBLEUP_CHAN..|PLAYING_POKER|ダブルアップチャンスに挑戦するかを選択する  |
 |PLAYING_POKER|ROYAL_STRAIG.. |FINAL        |30秒待機後Shareボタンを押して状態遷移を終了 |
 |PLAYING_POKER|BEFORE_BET_COIN|RETRY_OR_END |かけ金を入力してリトライ、または状態遷移終了|
 
 状態遷移のポイントは以下の通り
 
 * "くばる"ボタンを検出するとカード選択の動作を行う
+* 役が成立してダブルアップチャンスに挑戦するか聞かれるダイアログを検出すると、
+  設定に従って"はい"or"いいえ"を選択する
 * ロイヤルストレートスライムを検出すると30秒待ってからShareボタンを押して状態遷移を終了する
     * そのままビデオクリップを保存すれば、終了前の動画を見ることができる
     * 30秒待つのはファンファーレが鳴り終わってからビデオクリップを保存するため
@@ -124,6 +128,7 @@ PS4リモートプレイをPC上で実行することで、PS4のゲームをキ
         * スライムのA
         * ジョーカー
     * かけ金入力欄(入力値は0)のキャプチャ。
+    * (Optional) ダブルアップチャンスの挑戦選択ダイアログ & メッセージのキャプチャ。
 3. 自動操作の実行
 
 ### 1. 事前準備
@@ -229,15 +234,44 @@ $ java -jar autoplay-dq11-poker-x.x.x.RELEASE.jar --mode=capture-bet-coin-input 
       オプション値を調整します。
       その際には、これまでのキャプチャも全て同じオプション値でキャプチャし直してください。
 
+### 2.4 (Optional) ダブルアップチャンスの挑戦選択ダイアログ & メッセージのキャプチャ
+この作業は、ポーカーで役が成立した場合にダブルアップチャンスに挑戦する場合は必要ありません。
+時間短縮のためにダブルアップチャンスを断る場合にはキャプチャの作業が必要になります。
+
+* 役が成立し、「ダブルアップに 挑戦しますか?」「はい」「いいえ」
+  のダイアログが表示されている状態にします。
+* 以下のコマンドでキャプチャします。
+```bash
+$ java -jar autoplay-dq11-poker-x.x.x.RELEASE.jar --mode=capture-doubleup-chance-select --game-screen.location-x=0 --game-screen.location-y=45
+```
+
+* captureディレクトリにdoubleupChanceSelectMessage.pngが生成されているので、
+  画像を開いて確認します。
+  「成功すると」という文字列がキャプチャできていれば成功です。
+    * キャプチャに失敗した場合は、--game-screen.locationのオプション値を調整します。
+      その際には、これまでのキャプチャも全て同じオプション値でキャプチャし直してください。
+* captureディレクトリにdoubleupChanceSelectDialog.pngが生成されているので、
+  画像を開いて確認します。
+  「はい」「いいえ」がキャプチャできていれば成功です。
+    * 注意!!: 「はい」「いいえ」の左側にカーソル(金色の剣のアイコン)
+      が少しでもキャプチャされていたらキャプチャ失敗です
+    * キャプチャに失敗した場合は、--game-screen.locationのオプション値を調整します。
+      その際には、これまでのキャプチャも全て同じオプション値でキャプチャし直してください。
 
 ### 3. 自動操作の実行
 * PS4リモートプレイでポーカーをプレイし、賭け金を決定する画面まで進めます。
     * このとき、PS4リモートプレイのウィンドウをキャプチャ時から動かさないようにしてください。
     * かけ金は0以外に設定しておく必要があります
-* 以下のコマンドを実行します。
+* ダブルアップチャンスに挑戦する場合は、以下のコマンドを実行します。
 
 ```bash
 $ java -jar autoplay-dq11-poker-x.x.x.RELEASE.jar --mode=autoplay --game-screen.location-x=0 --game-screen.location-y=45
+```
+
+* ダブルアップチャンスに挑戦しない場合は、以下のコマンドを実行します。
+
+```bash
+$ java -jar autoplay-dq11-poker-x.x.x.RELEASE.jar --mode=autoplay --game-screen.location-x=0 --game-screen.location-y=45 --autoplay.dq11.poker.decide-try-doubleup-chance-action.try-doubleup=false
 ```
 
 * 自動実行を途中でやめたい場合は、マウスカーソルをデスクトップの左上の座標(0,0)に持っていき、
@@ -269,12 +303,13 @@ application.propertiesを書き換えることでも設定可能。
 ### mode=autoplay
 動作モードを指定するオプション。下記の値が指定可能。
 
-|設定可能な値              |説明                           |
-|--------------------------|-------------------------------|
-|autoplay                  |ポーカーの自動実行を行う       |
-|capture-deal-cards-button |"くばる"ボタンをキャプチャする |
-|capture-card              |カードをキャプチャする         |
-|capture-bet-coin-input    |かけ金入力欄をキャプチャする   |
+|設定可能な値                   |説明                                                        |
+|-------------------------------|------------------------------------------------------------|
+|autoplay                       |ポーカーの自動実行を行う                                    |
+|capture-deal-cards-button      |"くばる"ボタンをキャプチャする                              |
+|capture-card                   |カードをキャプチャする                                      |
+|capture-bet-coin-input         |かけ金入力欄をキャプチャする                                |
+|capture-doubleup-chance-select |ダブルアップチャンスのダイアログとメッセージをキャプチャする|
 
 ### capture-card-number=1
 --mode=capture-cardの場合に、キャプチャするカードの番号を指定するオプション。
@@ -412,6 +447,36 @@ PS4リモートプレイのウィンドウ内のゲーム画面の幅と高さ�
 ### autoplay.dq11.poker.capture.rectangle-map.bet-coin-input-capture.height=80
 かけ金入力欄のゲーム内での高さ。
 
+### autoplay.dq11.poker.capture.file-path-map.doubleup-chance-select-dialog=capture/doubleupChanceSelectDialog.png
+ダブルアップチャンス選択時のダイアログのキャプチャ画像のファイルパス。
+
+### autoplay.dq11.poker.capture.rectangle-map.doubleup-chance-select-dialog.x=620
+ダブルアップチャンス選択時のダイアログのゲーム画面内でのX座標。
+
+### autoplay.dq11.poker.capture.rectangle-map.doubleup-chance-select-dialog.y=370
+ダブルアップチャンス選択時のダイアログのゲーム画面内でのY座標。
+
+### autoplay.dq11.poker.capture.rectangle-map.doubleup-chance-select-dialog.width=50
+ダブルアップチャンス選択時のダイアログのゲーム画面内での幅。
+
+### autoplay.dq11.poker.capture.rectangle-map.doubleup-chance-select-dialog.height=55
+ダブルアップチャンス選択時のダイアログのゲーム画面内での高さ。
+
+### autoplay.dq11.poker.capture.file-path-map.doubleup-chance-select-message=capture/doubleupChanceSelectMessage.png
+ダブルアップチャンス選択時のメッセージのキャプチャ画像のファイルパス。
+
+### autoplay.dq11.poker.capture.rectangle-map.doubleup-chance-select-message.x=275
+ダブルアップチャンス選択時のメッセージのゲーム画面内でのX座標。
+
+### autoplay.dq11.poker.capture.rectangle-map.doubleup-chance-select-message.y=430
+ダブルアップチャンス選択時のメッセージのゲーム画面内でのY座標。
+
+### autoplay.dq11.poker.capture.rectangle-map.doubleup-chance-select-message.width=95
+ダブルアップチャンス選択時のメッセージのゲーム画面内での幅。
+
+### autoplay.dq11.poker.capture.rectangle-map.doubleup-chance-select-message.height=30
+ダブルアップチャンス選択時のメッセージのゲーム画面内での高さ。
+
 ### autoplay.dq11.poker.robot.autodelay=200
 キー操作やマウス操作で使用するRobotのディレイ値。
 
@@ -502,6 +567,3 @@ Shareボタンをマウスでクリックする前に待つ時間(ms)。
 * よりスマートで楽なキャプチャ画像の準備方法
 * よりスマートな画像判定
 * ネットワークが切れたときの検出および自動的に再接続
-* ダブルアップチャンスの状態を認識する
-    * ダブルアップチャンス10回連続の状態を検出する
-    * ダブルアップが不要な場合、ダブルアップを常に断ることで時間短縮する

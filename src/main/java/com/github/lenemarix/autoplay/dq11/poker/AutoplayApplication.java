@@ -60,7 +60,7 @@ public class AutoplayApplication implements ApplicationRunner {
         case CAPTURE_BET_COIN_INPUT:
             captureRunner.captureBetCoinInput();
             break;
-        case DOUBLEUP_CHANCE_SELECT:
+        case CAPTURE_DOUBLEUP_CHANCE_SELECT:
             captureRunner.captureDoubleupChanceDialog();
             break;
         default:
