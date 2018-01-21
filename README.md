@@ -99,7 +99,7 @@ OTHER_EVENTが送信されますが、OTHER_STATEのEntry ActionでEnterキー�
 |OTHER        |OTHER          |OTHER        |Enterキーを押す                             |
 |DEALT_CARDS  |OTHER          |OTHER        |Enterキーを押す                             |
 |PLAYING_POKER|DOUBLEUP_CHAN..|PLAYING_POKER|ダブルアップチャンスに挑戦するかを選択する  |
-|PLAYING_POKER|ROYAL_STRAIG.. |FINAL        |30秒待機後Shareボタンを押して状態遷移を終了 |
+|PLAYING_POKER|ROYAL_STRAIG.. |FINAL        |30秒待機後Shareボタン→Enterキーを押下し、状態遷移を終了 |
 |PLAYING_POKER|BEFORE_BET_COIN|RETRY_OR_END |かけ金を入力してリトライ、または状態遷移終了|
 
 状態遷移のポイントは以下の通り
@@ -107,8 +107,8 @@ OTHER_EVENTが送信されますが、OTHER_STATEのEntry ActionでEnterキー�
 * "くばる"ボタンを検出するとカード選択の動作を行う
 * 役が成立してダブルアップチャンスに挑戦するか聞かれるダイアログを検出すると、
   設定に従って"はい"or"いいえ"を選択する
-* ロイヤルストレートスライムを検出すると30秒待ってからShareボタンを押して状態遷移を終了する
-    * そのままビデオクリップを保存すれば、終了前の動画を見ることができる
+* ロイヤルストレートスライムを検出すると30秒待ってからShareボタン→Enterキーを押して状態遷移を終了する
+    * ビデオクリップが保存されるのであとから動画を見ることができる
     * 30秒待つのはファンファーレが鳴り終わってからビデオクリップを保存するため
 * かけ金入力欄を検出すると設定に応じてリトライまたは状態遷移終了となる
     * かけ金入力欄は通常は表示されないが、キーの取りこぼしやタイミングの問題で、
@@ -175,6 +175,9 @@ OTHER_EVENTが送信されますが、OTHER_STATEのEntry ActionでEnterキー�
       (MacOSの場合、おそらく下記の値と一致すると思います)
         * game-screen.location-x = 0
         * game-screen.location-y = 45
+* PS4の設定でSHAREボタン操作のタイプを標準にしておいてください
+    * ロイヤルストレートスライム達成時に自動的にビデオクリップを記録するために、SHAREボタンを利用します
+    * 具体的には、SHAREボタン押下 → Enterキー押下 → 「ビデオクリップをシェアする」の画面でツールを終了
 
 
 ### 2. 画像キャプチャの準備

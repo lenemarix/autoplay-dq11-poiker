@@ -12,13 +12,14 @@ import com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States;
 import com.github.lenemarix.autoplay.dq11.poker.util.RobotUtil;
 
 /**
- * shareボタンを押下するアクション。
+ * ビデオクリップを保存するアクション。
+ * shareボタンを押下してEnterキーを押下。
  */
-@ConfigurationProperties(prefix = "autoplay.dq11.poker.push-share-button-action")
-public class PushShareButtonAction extends AbstractAutoplayAction {
+@ConfigurationProperties(prefix = "autoplay.dq11.poker.save-video-clip-action")
+public class SaveVideoClipAction extends AbstractAutoplayAction {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(
-            PushShareButtonAction.class);
+            SaveVideoClipAction.class);
 
     /** Shareボタンのゲーム画面内X座標。 */
     private int shareButtonX;
@@ -43,6 +44,8 @@ public class PushShareButtonAction extends AbstractAutoplayAction {
         robotUtil.mouseMove(shareButtonX + gameScreen.getLocationX(),
                 shareButtonY + gameScreen.getLocationY());
         robotUtil.mouseLeftPress();
+        robotUtil.delay(3000);
+        robotUtil.enterKeyPress();
     }
 
     public int getShareButtonX() {
