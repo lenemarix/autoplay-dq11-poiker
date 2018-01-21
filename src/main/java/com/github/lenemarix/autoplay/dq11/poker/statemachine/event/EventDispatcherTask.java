@@ -20,9 +20,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.statemachine.StateMachine;
 
 import com.github.lenemarix.autoplay.dq11.poker.model.CaptureManager;
+import com.github.lenemarix.autoplay.dq11.poker.model.CaptureManager.CaptureKind;
 import com.github.lenemarix.autoplay.dq11.poker.model.CaptureRectangle;
 import com.github.lenemarix.autoplay.dq11.poker.model.Card;
-import com.github.lenemarix.autoplay.dq11.poker.model.CaptureManager.CaptureKind;
+import com.github.lenemarix.autoplay.dq11.poker.statemachine.action.DecideTryDoubleupChanceAction;
 import com.github.lenemarix.autoplay.dq11.poker.statemachine.state.States;
 import com.github.lenemarix.autoplay.dq11.poker.util.CardReader;
 import com.github.lenemarix.autoplay.dq11.poker.util.ImageComparator;
@@ -40,6 +41,9 @@ public class EventDispatcherTask {
 
     @Autowired
     StateMachine<States, Events> stateMachine;
+
+    @Autowired
+    DecideTryDoubleupChanceAction decideTryDoubleupChanceAction;
 
     @Autowired
     RobotUtil robotUtil;
@@ -113,7 +117,7 @@ public class EventDispatcherTask {
             event = Events.DEAL_CARDS_EVENT;
         } else if (shouldSendBeforeBetCoinInputEvent(screen)) {
             event = Events.BEFORE_BET_COIN_EVENT;
-        } else if (shoudSendDoubleupChanceSelectEvent(screen)) {
+        } else if (shoudSendDoubleupChanceEvent(screen)) {
             event = Events.DOUBLEUP_CHANCE_EVENT;
         } else {
             event = Events.OTHER_EVENT;
@@ -201,7 +205,18 @@ public class EventDispatcherTask {
         return false;
     }
 
-    private boolean shoudSendDoubleupChanceSelectEvent(BufferedImage screen) {
+    /**
+     * ダブルアップチャンスイベントを送信するべきか判定する。
+     * 
+     * @param screen ゲーム画面のキャプチャ。
+     * @return イベントを送信するべきならtrue。それ以外はfalse。
+     */
+    private boolean shoudSendDoubleupChanceEvent(BufferedImage screen) {
+        // ダブルアップチャンスに挑戦する場合はOTHER_EVENTでよいので、DOUBLEUP_CHANCE_EVENTは送信しない
+        if (decideTryDoubleupChanceAction.isTryDoubleup()) {
+            return false;
+        }
+
         CaptureRectangle dialogCapture = 
                 captureManager.getCaptureRectangle(CaptureKind.DOUBLEUP_CHANCE_SELECT_DIALOG);
         String dialogFilePath = captureManager.getCaptureFilePath(CaptureKind.DOUBLEUP_CHANCE_SELECT_DIALOG);
